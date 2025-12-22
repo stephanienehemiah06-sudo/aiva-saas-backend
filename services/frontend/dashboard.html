@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AIVA Technician Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+  margin:0;
+  display:flex;
+  height:100vh;
+  font-family:"Segoe UI",sans-serif;
+  background:#fff9f4;
+  overflow:hidden;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:230px;
+  background:linear-gradient(160deg,#b07b46,#7a522c);
+  color:white;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+}
+.sidebar h2{
+  margin-bottom:20px;
+}
+.sidebar a{
+  text-decoration:none;
+  color:white;
+  display:block;
+  padding:10px;
+  margin-bottom:6px;
+  border-radius:10px;
+}
+.sidebar a:hover{
+  background:rgba(255,255,255,.2)
+}
+
+.logout-btn{
+  margin-top:auto;
+  width:100%;
+  border:0;
+  padding:10px;
+  border-radius:10px;
+  background:white;
+  color:#7a522c;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* ===== MAIN ===== */
+.content{
+  flex:1;
+  padding:35px;
+  background:
+    radial-gradient(circle at 15% 20%,#fdebe0 0%,transparent 60%),
+    radial-gradient(circle at 70% 80%,#f3dac8 0%,transparent 60%);
+}
+
+.topbar{
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.welcome{
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+/* ===== FLOWERS ===== */
+.flower{
+  position:fixed;
+  opacity:.08;
+  font-size:120px;
+  pointer-events:none;
+}
+
+.f1{top:20px; right:50px;}
+.f2{bottom:40px; left:30px;}
+
+</style>
+</head>
+<body>
+
+<div class="flower f1">🌸</div>
+<div class="flower f2">🌷</div>
+
+<div class="sidebar">
+
+  <h2>💅 AIVA</h2>
+
+  <a href="#">📅 Appointments</a>
+  <a href="#">💳 Payments</a>
+
+  <!-- ✅ WORKING LINK TO SERVICES -->
+  <a href="service.html">💎 Services & Pricing</a>
+
+  <a href="#">🌍 Social Media</a>
+  <a href="#">🤖 AI Assistant</a>
+  <a href="#">🛠️ Account Settings</a>
+
+  <button id="logout" class="logout-btn">Logout 🚪</button>
+
+</div>
+
+<div class="content">
+
+  <div id="tech-email" class="topbar"></div>
+
+  <div class="welcome" id="welcome-msg"></div>
+
+  <p>
+    🌹 This is your command center.  
+    Setup your services & prices, connect social accounts,
+    accept bookings & automate your beauty business.
+  </p>
+
+</div>
+
+<script>
+
+const token = localStorage.getItem("aiva_token");
+if(!token){
+  window.location.href = "technician_login.html";
+}
+
+const name = localStorage.getItem("aiva_technician_name") || "Beauty Pro";
+const email = localStorage.getItem("aiva_technician_email") || "";
+
+document.getElementById("welcome-msg").innerHTML =
+  `<h2>Welcome ${name} 💖</h2>
+   <p>Create magical experiences for your clients today ✨</p>`;
+
+document.getElementById("tech-email").textContent =
+  `Logged in as: ${email}`;
+
+document.getElementById("logout").onclick = () => {
+  localStorage.clear();
+  window.location.href = "technician_login.html";
+};
+
+</script>
+
+</body>
+</html>

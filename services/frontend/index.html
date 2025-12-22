@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIVA Lash & Nail Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AIVA Lash & Nail Booking</h1>
+        <form id="bookingForm">
+            <label>Technician Email</label>
+            <input type="email" id="technician_email" placeholder="Enter technician email" required>
+
+            <label>Client Name</label>
+            <input type="text" id="client_name" placeholder="Enter client name" required>
+
+            <label>Service</label>
+            <input type="text" id="service" placeholder="E.g. Lash Extension" required>
+
+            <label>Date</label>
+            <input type="date" id="date" required>
+
+            <label>Time</label>
+            <input type="time" id="time" required>
+
+            <label>Client Email</label>
+            <input type="email" id="email" placeholder="Enter client email" required>
+
+            <label>Client Phone</label>
+            <input type="tel" id="phone" placeholder="Enter client phone number" required>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+
+        <p id="responseMessage"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

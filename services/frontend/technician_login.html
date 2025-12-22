@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AIVA — Technician Login</title>
+
+<style>
+body{
+  margin:0;
+  font-family:"Segoe UI",sans-serif;
+  background:linear-gradient(135deg,#6e3f2b,#d39bb6);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  width:330px;
+  background:#f4efe9;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+
+h2{
+  text-align:center;
+  color:#6e3f2b;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:0;
+  margin-bottom:14px;
+  background:#f1ded2;
+}
+
+button{
+  width:100%;
+  border:none;
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#6e3f2b,#a86f4c);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+<h2>Technician Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+</div>
+
+<script>
+async function login(){
+
+ const payload={
+  email: email.value,
+  password: password.value
+ };
+
+ const res=await fetch("http://127.0.0.1:8000/login",{
+   method:"POST",
+   headers:{ "Content-Type":"application/json" },
+   body:JSON.stringify(payload)
+ });
+
+ const data=await res.json();
+
+ localStorage.setItem("aiva_token",data.access_token);
+ localStorage.setItem("aiva_technician_name",data.technician.full_name);
+ localStorage.setItem("aiva_technician_email",data.technician.email);
+
+ // ✅ LOGIN redirects directly to dashboard
+ window.location.href="dashboard.html";
+}
+</script>
+
+</body>
+</html>
