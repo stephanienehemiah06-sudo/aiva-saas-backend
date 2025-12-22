@@ -1,0 +1,15 @@
+# Environment variables
+.env
+
+# Database
+*.db
+
+# Credentials
+google_credentials.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
