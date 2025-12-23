@@ -3,8 +3,10 @@
 # =======================
 
 from typing import List
+import os
 from fastapi import FastAPI, Depends, HTTPException, Request, Header, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import PlainTextResponse
 from sqlalchemy.orm import Session
 
 import models
@@ -42,10 +44,17 @@ app.add_middleware(
 )
 
 # =======================
+# WEBHOOK ROUTER ✅
+# =======================
+
+from webhook import router as webhook_router
+app.include_router(webhook_router)
+
+# =======================
 # META WEBHOOK CONFIG ✅
 # =======================
 
-VERIFY_TOKEN = "aiva_verify_token_2025"
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
 # =======================
 # AUTH HELPER ✅
@@ -156,7 +165,6 @@ def create_service(
     db: Session = Depends(get_db),
     technician=Depends(get_current_technician),
 ):
-
     s = models.Service(
         technician_id=technician.id,
         name=service.name,
@@ -197,7 +205,6 @@ def check_availability(
     db: Session = Depends(get_db),
     technician=Depends(get_current_technician),
 ):
-
     taken = db.query(Booking).filter(
         Booking.technician_id == technician.id,
         Booking.appointment_date == appointment_date,
@@ -214,7 +221,6 @@ def create_booking(
     db: Session = Depends(get_db),
     technician=Depends(get_current_technician),
 ):
-
     occupied = db.query(Booking).filter(
         Booking.technician_id == technician.id,
         Booking.appointment_date == data.appointment_date,
@@ -239,51 +245,12 @@ def create_booking(
     db.commit()
     db.refresh(booking)
 
-    return {
-        "id": booking.id,
-        "technician_id": technician.id,
-        "service_id": data.service_id,
-        "client_name": booking.client_name,
-        "client_email": booking.client_email,
-        "appointment_date": booking.appointment_date,
-        "appointment_time": booking.appointment_time,
-        "status": booking.status,
-        "payment_link": technician.payment_provider or "",
-    }
+    return booking
 
 
-@app.post("/payment-webhook")
-async def payment_webhook(payload: dict, db: Session = Depends(get_db)):
-
-    ref = payload.get("reference")
-    if not ref:
-        return {"status": "ignored"}
-
-    booking = db.query(Booking).filter(
-        Booking.payment_reference == ref
-    ).first()
-
-    if not booking:
-        return {"status": "booking_not_found"}
-
-    booking.status = "CONFIRMED"
-    db.commit()
-    return {"status": "confirmed"}
-
-
-@app.get("/bookings/me", response_model=list[schemas.BookingResponse])
-def list_my_bookings(
-    db: Session = Depends(get_db),
-    technician=Depends(get_current_technician),
-):
-    return db.query(Booking).filter(
-        Booking.technician_id == technician.id
-    ).all()
-
-
-# ==================================================
-# 🤖 AI CHAT ENGINE ✅
-# ==================================================
+# =======================
+# 🤖 AI CHAT ENGINE
+# =======================
 
 from models import ConversationState
 
@@ -293,9 +260,6 @@ def chat_with_client(
     db: Session = Depends(get_db),
     technician=Depends(get_current_technician),
 ):
-
-    message = data.text.lower().strip()
-
     session = db.query(ConversationState).filter(
         ConversationState.chat_id == data.chat_id
     ).first()
@@ -329,10 +293,10 @@ def chat_with_client(
 async def verify_webhook(
     hub_mode: str = Query(None, alias="hub.mode"),
     hub_challenge: str = Query(None, alias="hub.challenge"),
-    hub_verify_token: str = Query(None, alias="hub.verify_token")
+    hub_verify_token: str = Query(None, alias="hub.verify_token"),
 ):
     if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
-        return int(hub_challenge)
+        return PlainTextResponse(hub_challenge)
 
     raise HTTPException(status_code=403, detail="Webhook verification failed")
 
