@@ -309,6 +309,47 @@ async def receive_webhook(request: Request):
 
 
 # =======================
+# PRIVACY POLICY (META)
+# =======================
+
+@app.get("/privacy")
+def privacy_policy():
+    return {
+        "privacy_policy": """
+AIVA Beauty SaaS Privacy Policy
+
+AIVA Beauty SaaS ("we", "our", "us") provides booking automation tools for beauty professionals.
+
+Information We Collect:
+- Business name
+- Email address
+- Phone number
+- Services and booking details
+- Messages sent through connected platforms (Instagram)
+
+How We Use Data:
+- To enable appointment booking
+- To respond to customer messages
+- To manage schedules and payments
+
+Data Sharing:
+- We do not sell or share personal data with third parties.
+- Data is only used to provide our services.
+
+Data Security:
+- All data is stored securely.
+- Access is restricted to authorized users only.
+
+User Control:
+- Users can request data deletion by contacting support.
+
+Contact:
+Email: support@aivabeauty.app
+"""
+    }
+
+
+# =======================
 # ROOT
 # =======================
 
