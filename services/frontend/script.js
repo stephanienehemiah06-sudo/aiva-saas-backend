@@ -62,8 +62,22 @@ document.getElementById("saveServiceBtn").addEventListener("click", async () => 
 
         alert("✅ Service saved successfully!");
 
+        //---------------------------
+        // ✅ MARK DASHBOARD STEP AS COMPLETED
+        //---------------------------
+        localStorage.setItem("setup_services", "done");
+
+        //---------------------------
         // Reset form
+        //---------------------------
         document.getElementById("serviceForm").reset();
+
+        //---------------------------
+        // Redirect back to dashboard
+        //---------------------------
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 800);
 
     } catch (error) {
         console.error("Save Service Error:", error);

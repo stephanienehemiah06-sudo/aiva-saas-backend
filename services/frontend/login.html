@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AIVA Beauty – Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-container">
+  <div class="login-left">
+    <img src="images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" class="app-logo" alt="AIVA Logo">
+    <p>Welcome back! Sign in to manage your bookings, clients, and AI-powered beauty workflows.</p>
+  </div>
+
+  <div class="login-right">
+    <h2>Login</h2>
+    <p class="login-subtext">Access your beauty business dashboard</p>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p class="signup-link">
+      Don’t have an account?
+      <a href="signup.html">Create Account</a>
+    </p>
+  </div>
+</div>
+
+<script>
+const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000").replace(/\/+$/, "");
+
+async function login(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email || !password){
+    alert("Please fill all fields");
+    return;
+  }
+
+  const res = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      email: email,
+      password: password
+    })
+  });
+
+  const data = await res.json();
+
+  if(!res.ok){
+    alert(data.detail || "Login failed");
+    return;
+  }
+
+  // ✅ STORE REQUIRED DATA
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("technician_id", data.technician_id);
+  localStorage.setItem("business_name", data.business_name);
+
+window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

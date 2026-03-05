@@ -2,150 +2,3161 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AIVA Technician Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>AIVA Beauty – Dashboard</title>
 <style>
-
+:root{--pink:#ff4f87;}
+*{box-sizing:border-box}
 body{
   margin:0;
+  font-family:Segoe UI,sans-serif;
+  background:linear-gradient(135deg,#ffe4ec,#fff6fb);
   display:flex;
   height:100vh;
-  font-family:"Segoe UI",sans-serif;
-  background:#fff9f4;
-  overflow:hidden;
 }
-
-/* ===== SIDEBAR ===== */
 .sidebar{
-  width:230px;
-  background:linear-gradient(160deg,#b07b46,#7a522c);
+  width:260px;
+  background:#111;
   color:white;
-  padding:24px;
+  padding:20px;
   display:flex;
   flex-direction:column;
 }
-.sidebar h2{
-  margin-bottom:20px;
+.sidebar h2{color:var(--pink);margin:0}
+.sidebar h3{font-weight:400;color:#ccc;font-size:14px}
+.menu{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px
 }
-.sidebar a{
-  text-decoration:none;
+.menu button{
+  background:rgba(255,255,255,.08);
+  border:none;
   color:white;
-  display:block;
-  padding:10px;
-  margin-bottom:6px;
+  padding:12px;
   border-radius:10px;
+  cursor:pointer;
+  text-align:left;
 }
-.sidebar a:hover{
-  background:rgba(255,255,255,.2)
-}
-
-.logout-btn{
-  margin-top:auto;
+.menu button:hover{background:var(--pink)}
+.locked{opacity:.4;pointer-events:none;}
+.logout{margin-top:auto}
+.logout button{
+  background:#ff3b3b;
+  border:none;
+  color:white;
+  padding:12px;
+  border-radius:10px;
   width:100%;
-  border:0;
-  padding:10px;
-  border-radius:10px;
-  background:white;
-  color:#7a522c;
-  font-weight:bold;
   cursor:pointer;
 }
-
-/* ===== MAIN ===== */
-.content{
+.main{
   flex:1;
-  padding:35px;
-  background:
-    radial-gradient(circle at 15% 20%,#fdebe0 0%,transparent 60%),
-    radial-gradient(circle at 70% 80%,#f3dac8 0%,transparent 60%);
+  padding:25px;
+  overflow-y:auto;
 }
-
-.topbar{
-  font-weight:600;
-  margin-bottom:10px;
-}
-
-.welcome{
+.card{
   background:white;
   padding:20px;
-  border-radius:16px;
-  box-shadow:0 5px 15px rgba(0,0,0,.08);
+  border-radius:15px;
+  margin-bottom:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
-
-/* ===== FLOWERS ===== */
-.flower{
+.action-btn{
+  background:linear-gradient(135deg,#ff4f87,#ff7fb0);
+  border:none;
+  color:white;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.section{display:none}
+.section.active{display:block}
+.plans-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+.plan-card{
+  border:1px solid #eee;
+  padding:18px;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.plan-card h3{margin:0;font-size:18px}
+.plan-price{margin:0;font-size:24px;font-weight:700;color:#111}
+.plan-note{margin:0;color:#666;font-size:13px}
+.plan-features{margin:0;padding-left:18px;color:#333}
+.plan-features li{margin:6px 0}
+.plan-card .action-btn{margin-top:auto;width:100%}
+.recommended{
+  border:2px solid var(--pink);
+  box-shadow:0 8px 20px rgba(255,79,135,.15);
+}
+.trial-notice{
+  margin:10px 0 14px 0;
+  border:1px solid #ffd9e6;
+  background:#fff4f9;
+  border-radius:12px;
+  padding:12px;
+  color:#8a2b4c;
+  display:none;
+}
+.strategy-grid{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px;
+}
+.strategy-card{
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:14px;
+  background:#fff;
+}
+.strategy-card h3{margin:0 0 8px 0;font-size:16px}
+.strategy-card ul{margin:0;padding-left:18px;color:#333}
+.strategy-card li{margin:6px 0}
+.price-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+.price-table th,.price-table td{
+  border:1px solid #eee;
+  text-align:left;
+  padding:10px;
+}
+.price-table th{background:#fff6fb}
+.feature-matrix-wrap{
+  margin-top:12px;
+  border:1px solid #eee;
+  border-radius:12px;
+  overflow:auto;
+  background:#fff;
+}
+.feature-matrix{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+.feature-matrix th,.feature-matrix td{
+  border-bottom:1px solid #eee;
+  padding:10px;
+  text-align:left;
+  font-size:13px;
+}
+.feature-matrix thead th{
+  background:#fff6fb;
+  font-weight:700;
+}
+.feature-matrix tbody tr:last-child td{border-bottom:none}
+.feature-plan-current{
+  background:#fff0f6 !important;
+  color:#b83a6c;
+}
+.plan-badge{
+  display:inline-block;
+  background:#ffe6f0;
+  color:#b83a6c;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  padding:5px 10px;
+  width:max-content;
+}
+.checkout-card{
+  margin-top:18px;
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:16px;
+  background:#fff;
+}
+.checkout-card h3{margin:0 0 6px 0}
+.checkout-method-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin:14px 0;
+}
+.checkout-method-btn{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  cursor:pointer;
+  background:#fff;
+  font-weight:600;
+  text-align:left;
+  position:relative;
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.checkout-method-btn.active{
+  border-color:var(--pink);
+  box-shadow:0 0 0 2px rgba(255,79,135,.15);
+  transform:translateY(-1px);
+}
+.method-title{display:block;font-size:14px;color:#111}
+.method-meta{display:block;font-size:12px;color:#666;margin-top:4px;font-weight:500}
+.method-check{
+  position:absolute;
+  right:10px;
+  top:10px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  border:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  color:#fff;
+  background:#fff;
+}
+.checkout-method-btn.active .method-check{
+  background:var(--pink);
+  border-color:var(--pink);
+}
+.checkout-footnote{margin-top:10px;font-size:12px;color:#777}
+.checkout-actions{display:flex;gap:10px;flex-wrap:wrap}
+.secondary-btn{
+  background:#eee;
+  color:#222;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+.onboarding-welcome{
+  margin-top:14px;
+  border:1px solid #ffd6e6;
+  background:linear-gradient(135deg,#fff7fb,#fff);
+}
+.onboarding-welcome h3{margin:0 0 6px 0}
+.onboarding-grid{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:10px;
+}
+.onboarding-item{
+  border:1px solid #eee;
+  border-radius:10px;
+  padding:10px;
+  background:#fff;
+}
+.onboarding-item b{display:block;margin-bottom:4px}
+.onboarding-modal{
   position:fixed;
-  opacity:.08;
-  font-size:120px;
-  pointer-events:none;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:1200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
 }
+.onboarding-modal-box{
+  width:min(760px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 16px 40px rgba(0,0,0,.2);
+}
+.onboarding-form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.onboarding-form-grid textarea{min-height:88px;resize:vertical}
+.onboarding-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+#modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5)
+}
+.modal-box{
+  background:white;
+  width:350px;
+  margin:120px auto;
+  padding:20px;
+  border-radius:12px
+}
+input,select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd
+}
+.logo-link{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:20px;
+  text-decoration:none;
+}
+.app-logo{
+  width:140px;
+  max-width:100%;
+  display:block;
+}
+@media(max-width:768px){.app-logo{width:110px;}}
 
-.f1{top:20px; right:50px;}
-.f2{bottom:40px; left:30px;}
-
+/* Social Media Styles - SIMPLIFIED */
+.connection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.social-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+}
+.social-icon { font-size: 40px; margin-bottom: 10px; }
+.social-name { font-size: 18px; font-weight: bold; }
+.connection-status {
+  margin: 10px 0;
+  font-size: 14px;
+}
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.status-dot.connected { background-color: #27ae60; }
+.status-dot.disconnected { background-color: #e74c3c; }
+.connected-info {
+  margin-top: 15px;
+  padding: 12px;
+  background: #f0f9f0;
+  border-radius: 8px;
+  border-left: 3px solid #27ae60;
+  display: none;
+  font-size: 14px;
+}
+.connect-btn {
+  background: linear-gradient(135deg, #ff4f87, #ff7fb0);
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+.disconnect-btn {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.qr-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.qr-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 350px;
+  width: 90%;
+}
+.qr-code {
+  margin: 20px auto;
+  width: 200px;
+  height: 200px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-code img { width: 200px; height: 200px; }
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  color: white;
+  border-radius: 6px;
+  z-index: 9999;
+  animation: slideIn 0.3s;
+}
+.notification.success { background: #27ae60; }
+.notification.error { background: #e74c3c; }
+.notification.info { background: #3498db; }
+.dashboard-notify-wrap{
+  border:1px solid #ffd6e6;
+  background:#fff8fb;
+  border-radius:12px;
+  padding:12px;
+  margin-top:12px;
+}
+.dashboard-notify-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.dashboard-notify-badge{
+  background:#ff4f87;
+  color:#fff;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:12px;
+  font-weight:700;
+}
+.dashboard-notify-item{
+  border:1px solid #f0d5e1;
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  margin-top:8px;
+}
+.dashboard-notify-item.read{opacity:.75;}
+.dashboard-notify-meta{font-size:12px;color:#777;margin-top:4px;}
+.complaint-mini-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:10px;}
+@media(max-width:900px){.complaint-mini-form{grid-template-columns:1fr;}}
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
 </style>
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
-<div class="flower f1">🌸</div>
-<div class="flower f2">🌷</div>
-
 <div class="sidebar">
-
-  <h2>💅 AIVA</h2>
-
-  <a href="#">📅 Appointments</a>
-  <a href="#">💳 Payments</a>
-
-  <!-- ✅ WORKING LINK TO SERVICES -->
-  <a href="service.html">💎 Services & Pricing</a>
-
-  <a href="#">🌍 Social Media</a>
-  <a href="#">🤖 AI Assistant</a>
-  <a href="#">🛠️ Account Settings</a>
-
-  <button id="logout" class="logout-btn">Logout 🚪</button>
-
+<h3 id="welcomeText"></h3>
+<div class="menu">
+<button onclick="show('dashboard')">🏠 Dashboard</button>
+<button onclick="openProfileSetupEditor()">🧾 Edit Profile Setup</button>
+<button onclick="show('plans')">💎 Subscription Plan</button>
+<button onclick="show('services')">💅 Services</button>
+<button onclick="show('calendar')">📅 Calendar</button>
+<button onclick="show('payments')">💳 Payments</button>
+<button onclick="show('bookings')">📋 Bookings</button>
+<button onclick="show('staff')">👥 Staff</button>
+<button onclick="show('social')">📲 Social Media</button>
+</div>
+<div class="logout">
+<button onclick="logout()">Logout</button>
+</div>
 </div>
 
-<div class="content">
+<div class="main">
+<!-- Dashboard Section -->
+<div class="card section active" id="dashboard">
+  <a href="dashboard.html" class="logo-link">
+    <img src="images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" alt="AIVA Logo" class="app-logo">
+  </a>
+  <h2 id="businessName"></h2>
+  <div style="text-align:right; margin-bottom:10px;">
+    <button id="profileSetupEditBtn" class="secondary-btn" style="display:none;" onclick="openProfileSetupEditor()">Edit Profile Setup</button>
+  </div>
+  <div class="card onboarding-welcome" id="onboardingWelcomeCard" style="display:none;">
+    <h3 id="onboardingWelcomeTitle">Welcome to your dashboard</h3>
+    <p id="onboardingWelcomeText" style="margin:0;color:#555;"></p>
+    <div class="onboarding-grid">
+      <div class="onboarding-item"><b>🏠 Dashboard</b><span>See your plan, payment method, services, and quick business summary.</span></div>
+      <div class="onboarding-item"><b>💎 Subscription Plan</b><span>Choose Free, Starter, Pro, or Premium and manage your monthly billing.</span></div>
+      <div class="onboarding-item"><b>💅 Services</b><span>Add and edit the services clients can book with your business.</span></div>
+      <div class="onboarding-item"><b>📅 Calendar</b><span>Set your weekly availability so bookings follow your working hours.</span></div>
+      <div class="onboarding-item"><b>💳 Payments</b><span>Configure payment method, upload/review proofs, and billing settings.</span></div>
+      <div class="onboarding-item"><b>📋 Bookings</b><span>Track client bookings and payment status in one place.</span></div>
+      <div class="onboarding-item"><b>📲 Social Media</b><span>Connect channels and automate replies, handoff, and social testing.</span></div>
+    </div>
+    <div style="margin-top:12px;text-align:right;">
+      <button class="secondary-btn" onclick="closeOnboardingWelcome()">Got it</button>
+    </div>
+  </div>
 
-  <div id="tech-email" class="topbar"></div>
+  <div class="dashboard-notify-wrap">
+    <div class="dashboard-notify-head">
+      <h3 style="margin:0;">🔔 Notifications</h3>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span id="dashboardNotifUnread" class="dashboard-notify-badge">0 unread</span>
+        <button class="secondary-btn" type="button" onclick="markAllDashboardNotificationsRead()">Mark all read</button>
+      </div>
+    </div>
+    <div id="dashboardNotifStatus" style="font-size:12px;color:#666;margin-top:6px;">Loading notifications...</div>
+    <div id="dashboardNotifList" style="margin-top:8px;"></div>
+    <div class="complaint-mini-form">
+      <input id="complaintClientName" placeholder="Client name" />
+      <input id="complaintText" placeholder="Client complaint" />
+      <button class="action-btn" type="button" onclick="submitComplaintFromDashboard()">Submit Complaint</button>
+    </div>
+  </div>
 
-  <div class="welcome" id="welcome-msg"></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px">
+    <div class="card"><b>Services</b><p id="totalServices">0</p></div>
+    <div class="card"><b>Payment Method</b><p id="paymentMethod">Not Set</p></div>
+    <div class="card"><b>Plan</b><p id="currentPlan">Free</p></div>
+  </div>
+  <div style="margin-top:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:15px">
+    <div class="card"><b>Working Days</b><p id="workingDays">Not set</p></div>
+    <div class="card"><b>Availability Summary</b><div id="dashboardAvailabilitySummary">No availability set yet</div></div>
+  </div>
 
-  <p>
-    🌹 This is your command center.  
-    Setup your services & prices, connect social accounts,
-    accept bookings & automate your beauty business.
-  </p>
+  <div class="card" style="margin-top:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+      <h3 style="margin:0;">💷 Revenue Dashboard</h3>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <label for="revenuePeriodDays" style="font-size:13px;color:#666;">Period</label>
+        <select id="revenuePeriodDays" onchange="loadRevenueDashboard()" style="width:auto;min-width:110px;">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+      </div>
+    </div>
 
+    <div id="revenueUpgradePrompt" style="display:none;margin-top:10px;padding:10px;border:1px solid #ffd6e6;background:#fff4f9;border-radius:10px;color:#8a2b4c;">
+      Revenue Dashboard is a Premium feature. Upgrade to Premium to view full revenue insights.
+      <div style="margin-top:8px;"><button class="action-btn" type="button" onclick="show('plans')">View Plans</button></div>
+    </div>
+
+    <div id="revenueCards" style="margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:10px;">
+      <div style="background:#f8f9ff;padding:10px;border-radius:8px;"><div style="font-size:12px;color:#777;">Confirmed Revenue</div><div id="revConfirmed" style="font-size:20px;font-weight:700;">£0.00</div></div>
+      <div style="background:#f8f9ff;padding:10px;border-radius:8px;"><div style="font-size:12px;color:#777;">Confirmed Bookings</div><div id="revBookings" style="font-size:20px;font-weight:700;">0</div></div>
+      <div style="background:#f8f9ff;padding:10px;border-radius:8px;"><div style="font-size:12px;color:#777;">Average Ticket</div><div id="revAvgTicket" style="font-size:20px;font-weight:700;">£0.00</div></div>
+      <div style="background:#fff5f5;padding:10px;border-radius:8px;"><div style="font-size:12px;color:#777;">Pending Revenue</div><div id="revPending" style="font-size:20px;font-weight:700;color:#e67e22;">£0.00</div></div>
+    </div>
+
+    <div style="margin-top:12px;display:grid;grid-template-columns:2fr 1fr;gap:12px;">
+      <div style="border:1px solid #eee;border-radius:10px;padding:10px;">
+        <div style="font-size:13px;color:#666;margin-bottom:8px;">Revenue Trend</div>
+        <div id="revenueTrendBars" style="display:flex;align-items:flex-end;gap:4px;height:120px;"></div>
+      </div>
+      <div style="border:1px solid #eee;border-radius:10px;padding:10px;">
+        <div style="font-size:13px;color:#666;margin-bottom:8px;">Top Services</div>
+        <div id="revenueTopServices" style="font-size:13px;color:#444;">No service data yet.</div>
+      </div>
+    </div>
+
+    <p id="revenueStatus" style="margin:10px 0 0 0;color:#777;font-size:12px;">Loading revenue metrics...</p>
+  </div>
+</div>
+
+<!-- Plans Section -->
+<div class="card section" id="plans">
+  <h2>Subscription Plans</h2>
+  <div id="subscriptionTrialNotice" class="trial-notice"></div>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <h3>Free</h3>
+      <p class="plan-price">£0</p>
+      <p class="plan-note">Auto-applies when your 7-day trial ends</p>
+      <ul class="plan-features">
+        <li>✅ Basic dashboard access</li>
+        <li>✅ Manual booking management</li>
+        <li>❌ DM booking automation</li>
+        <li>❌ Advanced support</li>
+      </ul>
+      <button class="secondary-btn" type="button" disabled>Included after trial</button>
+    </div>
+    <div class="plan-card">
+      <h3>Starter</h3>
+      <p class="plan-price">£29 / Month</p>
+      <p class="plan-note">Entry tier with low-friction automation</p>
+      <ul class="plan-features">
+        <li>✅ Basic auto-reply templates</li>
+        <li>✅ Booking link sharing</li>
+        <li>✅ Calendar sync</li>
+        <li>✅ Email &amp; knowledge base support</li>
+      </ul>
+      <button class="action-btn" onclick="subscribePlan('starter')">Choose Starter</button>
+    </div>
+    <div class="plan-card recommended">
+      <span class="plan-badge">MOST POPULAR</span>
+      <h3>Pro</h3>
+      <p class="plan-price">£75 / Month</p>
+      <p class="plan-note">Core monetisation plan</p>
+      <ul class="plan-features">
+        <li>✅ Full DM booking agent</li>
+        <li>✅ Deposit capture + payment recognition</li>
+        <li>✅ Automated reminders + Google Sheets CRM</li>
+        <li>✅ In-app chat / onboarding call support</li>
+      </ul>
+      <button class="action-btn" onclick="subscribePlan('pro')">Upgrade to Pro</button>
+    </div>
+    <div class="plan-card">
+      <h3>Premium</h3>
+      <p class="plan-price">£149 / Month</p>
+      <p class="plan-note">Studio tier for advanced operations</p>
+      <ul class="plan-features">
+        <li>✅ Multi-staff scheduling</li>
+        <li>✅ Revenue dashboard + API support</li>
+        <li>✅ Priority onboarding &amp; training</li>
+        <li>✅ In-app chat / onboarding call support</li>
+      </ul>
+      <button class="action-btn" onclick="subscribePlan('premium')">Upgrade to Premium</button>
+    </div>
+  </div>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <h3>33.2 Tiered Service Offerings</h3>
+      <ul>
+        <li><b>Starter (Entry):</b> basic auto-reply templates, booking link sharing, calendar sync. Low price to reduce friction.</li>
+        <li><b>Pro (Core monetisation):</b> full DM booking agent, deposit capture, payment recognition, reminders, Google Sheets CRM.</li>
+        <li><b>Premium (Studio):</b> multi-staff scheduling, revenue dashboard, API support, priority onboarding &amp; training.</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3>3.3.3 Add-on Services</h3>
+      <ul>
+        <li><b>1:1 Onboarding / Prompt Tuning:</b> pay to have Aiya trained to a tech's tone.</li>
+        <li><b>Data Migration:</b> moving clients from Acuity/Eresha/Calendly.</li>
+        <li><b>Custom Branding &amp; SMS credits.</b></li>
+        <li><b>Marketing toolkit:</b> AI social captions / promos (future add-on).</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3>3.3.4 Delivery &amp; Support Model</h3>
+      <ul>
+        <li>Self-service onboarding with optional paid human onboarding.</li>
+        <li>Human-in-loop escalation: ability for tech to take conversation over from AI.</li>
+        <li><b>Support tiers:</b> email &amp; knowledge base (Starter), in-app chat / onboarding call (Pro/Premium).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="strategy-card" style="margin-top:12px;">
+    <h3>Tier Pricing (Monthly)</h3>
+    <table class="price-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Price (Monthly)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Starter</td>
+          <td>£29</td>
+        </tr>
+        <tr>
+          <td>Pro (Core)</td>
+          <td>£75</td>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>£149</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="feature-matrix-wrap">
+    <table id="planFeatureMatrix" class="feature-matrix">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th data-plan-col="free">Free</th>
+          <th data-plan-col="starter">Starter</th>
+          <th data-plan-col="pro">Pro</th>
+          <th data-plan-col="premium">Premium</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Manual booking management</td>
+          <td data-plan-col="free">✅</td>
+          <td data-plan-col="starter">✅</td>
+          <td data-plan-col="pro">✅</td>
+          <td data-plan-col="premium">✅</td>
+        </tr>
+        <tr>
+          <td>Auto-reply templates + booking link sharing</td>
+          <td data-plan-col="free">❌</td>
+          <td data-plan-col="starter">✅</td>
+          <td data-plan-col="pro">✅</td>
+          <td data-plan-col="premium">✅</td>
+        </tr>
+        <tr>
+          <td>AI booking assistant + DM automation</td>
+          <td data-plan-col="free">❌</td>
+          <td data-plan-col="starter">❌</td>
+          <td data-plan-col="pro">✅</td>
+          <td data-plan-col="premium">✅</td>
+        </tr>
+        <tr>
+          <td>Deposit capture + payment recognition</td>
+          <td data-plan-col="free">❌</td>
+          <td data-plan-col="starter">❌</td>
+          <td data-plan-col="pro">✅</td>
+          <td data-plan-col="premium">✅</td>
+        </tr>
+        <tr>
+          <td>Google Sheets CRM + reminders</td>
+          <td data-plan-col="free">❌</td>
+          <td data-plan-col="starter">❌</td>
+          <td data-plan-col="pro">✅</td>
+          <td data-plan-col="premium">✅</td>
+        </tr>
+        <tr>
+          <td>Multi-staff scheduling + revenue dashboard + API support</td>
+          <td data-plan-col="free">❌</td>
+          <td data-plan-col="starter">❌</td>
+          <td data-plan-col="pro">❌</td>
+          <td data-plan-col="premium">✅</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="subscriptionCheckoutCard" class="checkout-card" style="display:none;">
+    <h3>Complete Subscription Checkout</h3>
+    <p style="margin:0;color:#666;">Pick a payment method, then continue to secure Stripe checkout.</p>
+    <div class="checkout-method-grid">
+      <button type="button" class="checkout-method-btn active" data-method="card" onclick="selectCheckoutMethod('card')"><span class="method-title">💳 Card</span><span class="method-meta">Visa, Mastercard, Verve</span><span class="method-check">✓</span></button>
+      <button type="button" class="checkout-method-btn" data-method="bank_transfer" onclick="selectCheckoutMethod('bank_transfer')"><span class="method-title">🏦 Bank Transfer</span><span class="method-meta">Instant transfer support</span><span class="method-check">✓</span></button>
+      <button type="button" class="checkout-method-btn" data-method="ussd" onclick="selectCheckoutMethod('ussd')"><span class="method-title">📱 USSD</span><span class="method-meta">Bank code payment</span><span class="method-check">✓</span></button>
+      <button type="button" class="checkout-method-btn" data-method="wallet" onclick="selectCheckoutMethod('wallet')"><span class="method-title">👛 Wallet</span><span class="method-meta">Supported digital wallets</span><span class="method-check">✓</span></button>
+    </div>
+    <p id="checkoutPlanLabel" style="margin:0 0 12px 0;font-weight:600;"></p>
+    <p id="checkoutMethodLabel" style="margin:0 0 10px 0;color:#555;">Payment method: Card</p>
+    <div class="checkout-actions">
+      <button class="action-btn" onclick="continueSubscriptionCheckout()">Continue to Stripe</button>
+      <button class="secondary-btn" onclick="cancelSubscriptionCheckout()">Cancel</button>
+    </div>
+    <p class="checkout-footnote">Secure billing powered by Stripe. Final supported options appear on Stripe checkout.</p>
+  </div>
+</div>
+
+<!-- Services Section -->
+<div class="card section" id="services">
+  <h2>Services</h2>
+  <button class="action-btn" onclick="openModal()">Add Service</button>
+  <div id="servicesList"></div>
+</div>
+
+<!-- Service Modal -->
+<div id="modal">
+  <div class="modal-box">
+    <h3>Add Service</h3>
+    <input id="serviceName" placeholder="Service Name"><br><br>
+    <input id="servicePrice" placeholder="Price"><br><br>
+    <button class="action-btn" onclick="saveService()">Save</button>
+    <button class="action-btn" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- Calendar Section -->
+<div class="card section" id="calendar">
+  <h2>Weekly Availability</h2>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <div style="flex:1;min-width:300px">
+      <div class="card">
+        <h3>Set Working Hours</h3>
+        <p>Monday <input id="mon_start" type="time"> to <input id="mon_end" type="time"></p>
+        <p>Tuesday <input id="tue_start" type="time"> to <input id="tue_end" type="time"></p>
+        <p>Wednesday <input id="wed_start" type="time"> to <input id="wed_end" type="time"></p>
+        <p>Thursday <input id="thu_start" type="time"> to <input id="thu_end" type="time"></p>
+        <p>Friday <input id="fri_start" type="time"> to <input id="fri_end" type="time"></p>
+        <p>Saturday <input id="sat_start" type="time"> to <input id="sat_end" type="time"></p>
+        <p>Sunday <input id="sun_start" type="time"> to <input id="sun_end" type="time"></p>
+        <br><button class="action-btn" onclick="saveAvailability()">Save Availability</button>
+        <p id="availabilityStatus"></p>
+      </div>
+    </div>
+    <div style="flex:1;min-width:300px">
+      <div class="card"><h3>Your Schedule Summary</h3><div id="availabilitySummary"><p>No availability set yet</p></div></div>
+      <div class="card"><h3>Upcoming Bookings</h3><p>No appointments yet</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Payments Section -->
+<div class="card section" id="payments">
+  <h2>Payment Settings</h2>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <div style="flex:1;min-width:300px">
+      <div class="card">
+        <h3>Select Payment Method</h3>
+        <select id="paymentProvider"><option value="">Select</option><option value="manual">Manual Bank</option><option value="stripe">Stripe</option></select><br><br>
+        <div id="bankFields"><input id="bankName" placeholder="Bank Name"><br><br><input id="accountNumber" placeholder="Account Number"></div>
+        <p style="margin-top:10px"><label><input type="checkbox" id="autoConfirmProofs"> Auto-approve bank transfer proofs</label></p>
+        <button class="action-btn" onclick="savePayment()">Save Payment</button>
+        <p id="paymentStatus"></p>
+      </div>
+    </div>
+    <div style="flex:1;min-width:300px">
+      <div class="card"><h3>Active Payment Method</h3><p id="paymentMethod">Not Set</p><div id="savedBankInfo"></div></div>
+      <div class="card"><h3>Subscription Billing</h3><p>No separate Stripe connect is required for subscriptions.</p><p style="color:#666;font-size:13px;">Choose a plan in Subscription Plans and continue to Stripe checkout.</p></div>
+      <div class="card"><h3>Upload Payment Proof</h3><input id="proofBookingId" placeholder="Booking ID"><br><br><input id="proofFile" type="file"><br><br><button class="action-btn" onclick="uploadProof()">Upload Proof</button><p id="proofUploadStatus"></p></div>
+      <div class="card"><h3>Proofs To Review</h3><div id="paymentProofsList">Loading proofs...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Bookings Section -->
+<div class="card section" id="bookings">
+  <h2>Client Bookings</h2>
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr style="border-bottom:2px solid #ddd;background:#f5f5f5"><th style="padding:10px;">Client Name</th><th style="padding:10px;">Phone</th><th style="padding:10px;">Service</th><th style="padding:10px;">Staff</th><th style="padding:10px;">Date</th><th style="padding:10px;">Time</th><th style="padding:10px;">Source</th><th style="padding:10px;">Payment</th></tr></thead>
+      <tbody id="bookingsTable"><tr><td colspan="8" style="padding:10px;text-align:center;color:#999">Loading bookings...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Staff Section -->
+<div class="card section" id="staff">
+  <h2>Team Staff</h2>
+  <p style="margin-top:0;color:#666;">Premium feature: manage your team members for multi-staff scheduling.</p>
+  <div id="staffUpgradePrompt" style="display:none;margin-bottom:12px;padding:10px;border:1px solid #ffd6e6;background:#fff4f9;border-radius:10px;color:#8a2b4c;">
+    Staff management is a Premium feature.
+    <div style="margin-top:8px;"><button class="action-btn" type="button" onclick="show('plans')">View Plans</button></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+    <input id="staffName" placeholder="Staff full name">
+    <input id="staffRole" placeholder="Role (optional)">
+    <button class="action-btn" type="button" onclick="saveStaffMember()" id="staffSaveBtn">Add Staff</button>
+  </div>
+  <p id="staffStatus" style="margin-top:8px;color:#666;"></p>
+  <div id="staffList" style="margin-top:12px;">Loading staff...</div>
+</div>
+
+<!-- SOCIAL HUB SECTION -->
+<div class="card section" id="social">
+  <h2 style="margin-bottom:10px">📱 Social Hub</h2>
+  <p style="color:#666; margin-top:0; margin-bottom:16px;">Manage channels, automation, and message behavior from one place.</p>
+
+  <div class="card" style="margin-bottom:16px; background:#fff7fb; border:1px solid #ffd6e6;">
+    <h3 style="margin-top:0; margin-bottom:10px;">🚀 Quick Setup (ManyChat Style)</h3>
+    <div id="socialChecklist" style="display:grid; gap:8px; font-size:14px; color:#444;">
+      <div id="stepConnect">1) Connect your preferred channel</div>
+      <div id="stepTone">2) Save your AI chat style</div>
+      <div id="stepTest">3) Send a test message from Social Test</div>
+    </div>
+    <p id="socialHealthStatus" style="margin-top:12px; font-weight:600;">Status: waiting for setup</p>
+  </div>
+
+  <div id="welcomeBackBanner" style="display:none; margin-bottom:20px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; padding:20px; border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1);">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <div style="font-size:40px;">🎉</div>
+      <div style="flex:1;">
+        <h3 style="margin:0 0 5px 0; color:white;" id="welcomeBackTitle">Channel Connected!</h3>
+        <p style="margin:0; opacity:0.9; font-size:15px;" id="welcomeBackMessage">Your account has been successfully connected.</p>
+      </div>
+      <button onclick="dismissWelcomeBanner()" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:8px 15px; border-radius:20px; cursor:pointer; font-size:13px;">Dismiss</button>
+    </div>
+    <div id="connectedAccountDetails" style="margin-top:15px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.2); display:flex; gap:15px; flex-wrap:wrap;"></div>
+  </div>
+
+  <div class="connection-grid">
+    <div class="social-card">
+      <div class="social-icon">📸</div>
+      <div class="social-name">Instagram</div>
+      <div id="instagramStatus" class="connection-status"><span class="status-dot disconnected"></span> Not Connected</div>
+      <button class="connect-btn" onclick="connectSocial('instagram')">Connect Instagram</button>
+      <div id="instagramConnectedInfo" class="connected-info">
+        <p>✓ Connected as <strong id="instagramUsername"></strong></p>
+        <button class="disconnect-btn" onclick="disconnectSocial('instagram')">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="social-card">
+      <div class="social-icon">💬</div>
+      <div class="social-name">WhatsApp</div>
+      <div id="whatsappStatus" class="connection-status"><span class="status-dot disconnected"></span> Not Connected</div>
+      <button class="connect-btn" onclick="connectSocial('whatsapp')">Connect WhatsApp</button>
+      <div id="whatsappConnectedInfo" class="connected-info">
+        <p>✓ Connected as <strong id="whatsappNumber"></strong></p>
+        <button class="disconnect-btn" onclick="disconnectSocial('whatsapp')">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="social-card">
+      <div class="social-icon">👍</div>
+      <div class="social-name">Facebook</div>
+      <div id="facebookStatus" class="connection-status"><span class="status-dot disconnected"></span> Not Connected</div>
+      <button class="connect-btn" onclick="connectSocial('facebook')">Connect Facebook</button>
+      <div id="facebookConnectedInfo" class="connected-info">
+        <p>✓ Connected as <strong id="facebookPageName"></strong></p>
+        <button class="disconnect-btn" onclick="disconnectSocial('facebook')">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="social-card">
+      <div class="social-icon">🎵</div>
+      <div class="social-name">TikTok</div>
+      <div id="tiktokStatus" class="connection-status"><span class="status-dot disconnected"></span> Not Connected</div>
+      <button class="connect-btn" onclick="connectSocial('tiktok')">Connect TikTok</button>
+      <div id="tiktokConnectedInfo" class="connected-info">
+        <p>✓ Connected as <strong id="tiktokUsername"></strong></p>
+        <button class="disconnect-btn" onclick="disconnectSocial('tiktok')">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="social-card">
+      <div class="social-icon">✈️</div>
+      <div class="social-name">Telegram</div>
+      <div id="telegramStatus" class="connection-status"><span class="status-dot disconnected"></span> Not Connected</div>
+      <button class="connect-btn" onclick="connectSocial('telegram')">Connect Telegram</button>
+      <div id="telegramConnectedInfo" class="connected-info">
+        <p>✓ Connected as <strong id="telegramUsername"></strong></p>
+        <button class="disconnect-btn" onclick="disconnectSocial('telegram')">Disconnect</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>📊 Connected Channels</h3>
+    <div id="connectedAccountsSummary">No accounts connected</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>📈 Conversation Analytics</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:12px;">
+      <div style="background:#f8f9ff; padding:10px; border-radius:8px;"><div style="font-size:12px;color:#777;">Connected</div><div id="analyticsConnected" style="font-size:20px;font-weight:700;">0</div></div>
+      <div style="background:#f8f9ff; padding:10px; border-radius:8px;"><div style="font-size:12px;color:#777;">Active Sessions</div><div id="analyticsSessions" style="font-size:20px;font-weight:700;">0</div></div>
+      <div style="background:#f8f9ff; padding:10px; border-radius:8px;"><div style="font-size:12px;color:#777;">Incoming</div><div id="analyticsIncoming" style="font-size:20px;font-weight:700;">0</div></div>
+      <div style="background:#f8f9ff; padding:10px; border-radius:8px;"><div style="font-size:12px;color:#777;">Outgoing</div><div id="analyticsOutgoing" style="font-size:20px;font-weight:700;">0</div></div>
+      <div style="background:#fff5f5; padding:10px; border-radius:8px;"><div style="font-size:12px;color:#777;">Failed Sends</div><div id="analyticsFailed" style="font-size:20px;font-weight:700; color:#e74c3c;">0</div></div>
+    </div>
+    <div id="analyticsChannels" style="font-size:14px; color:#444;">No channel data yet.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>📥 Recent Messages</h3>
+    <p style="margin-top:0; color:#666; font-size:14px;">Latest incoming and outgoing messages across connected channels.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-bottom:10px;">
+      <select id="messageFilterChannel">
+        <option value="all">All Channels</option>
+      </select>
+      <select id="messageFilterDirection">
+        <option value="all">All Directions</option>
+        <option value="incoming">Incoming</option>
+        <option value="outgoing">Outgoing</option>
+      </select>
+      <select id="messageFilterStatus">
+        <option value="all">All Statuses</option>
+        <option value="received">Received</option>
+        <option value="sent">Sent</option>
+        <option value="failed">Failed</option>
+        <option value="skipped">Skipped</option>
+      </select>
+      <input id="messageSearch" placeholder="Search message text or sender..." />
+    </div>
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+      <label style="font-size:13px; color:#444;"><input type="checkbox" id="socialAutoRefresh" checked> Auto refresh (15s)</label>
+      <button type="button" class="connect-btn" style="max-width:150px; margin-top:0;" onclick="refreshSocialHubNow()">Refresh Now</button>
+      <span id="socialRefreshStatus" style="font-size:12px; color:#666;">Waiting for refresh...</span>
+    </div>
+    <div id="socialInboxTable" style="overflow:auto;">No messages yet.</div>
+
+    <div id="sessionDrawer" style="display:none; margin-top:14px; border:1px solid #eee; border-radius:10px; padding:12px; background:#fff;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px;">
+        <div>
+          <div style="font-weight:700;">Conversation Details</div>
+          <div id="sessionDrawerMeta" style="font-size:12px; color:#666;">No session selected</div>
+        </div>
+        <button type="button" onclick="closeSessionDrawer()" style="background:#f3f3f3;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">Close</button>
+      </div>
+      <div id="sessionDrawerTimeline" style="max-height:220px; overflow:auto; background:#fafafa; border-radius:8px; padding:10px; font-size:13px;">No messages loaded.</div>
+      <textarea id="manualReplyText" placeholder="Type your manual reply..." style="margin-top:10px; width:100%; min-height:70px;"></textarea>
+      <div style="display:flex; gap:10px; margin-top:8px; align-items:center;">
+        <button type="button" class="action-btn" onclick="sendManualReplyFromDrawer(); return false;">Send Manual Reply</button>
+        <span id="manualReplyStatus" style="font-size:13px; color:#666;"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>⚙️ Automation</h3>
+    <p style="margin-top:0; color:#666; font-size:14px;">Simple controls to run auto-replies like ManyChat.</p>
+    <label style="display:block; margin-bottom:12px;">
+      <input type="checkbox" id="autoReplyEnabled" checked> Enable auto-reply for connected channels
+    </label>
+    <textarea id="welcomeDmTemplate" style="width:100%; min-height:70px; padding:10px; border:1px solid #ddd; border-radius:6px;" placeholder="Welcome template (used in your confirmations)">Hi! Thanks for connecting with us on AIVA 🌸</textarea>
+    <button type="button" class="action-btn" style="margin-top:10px;" onclick="saveSocialAutomation(); return false;">💾 Save Automation</button>
+    <p id="socialAutomationStatus" style="margin-top:8px; font-size:14px;"></p>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>🧑‍💼 Human Handoff</h3>
+    <p style="margin-top:0; color:#666; font-size:14px;">Pause bot replies for a session when a human needs to take over.</p>
+    <input id="handoffSessionId" placeholder="Session ID (copy from Recent Messages)" style="margin-bottom:8px;" />
+    <input id="handoffNote" placeholder="Reason (optional) e.g. pricing dispute" style="margin-bottom:8px;" />
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button type="button" class="action-btn" onclick="pauseHandoff(); return false;">⏸ Pause Bot</button>
+      <button type="button" class="connect-btn" style="max-width:160px; margin-top:0;" onclick="resumeHandoff(); return false;">▶ Resume Bot</button>
+    </div>
+    <p id="handoffStatus" style="margin-top:8px; font-size:14px;"></p>
+    <div id="activeHandoffs" style="margin-top:10px; background:#f9f9f9; border-radius:8px; padding:10px; font-size:13px; color:#444;">No active handoffs.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>🤖 AI Chat Style</h3>
+    <p style="color:#666; font-size:14px; margin-bottom:15px;">Choose how your AI assistant talks to clients</p>
+
+    <select id="chatTone" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
+      <option value="friendly">😊 Friendly & Casual</option>
+      <option value="professional">👔 Professional & Polished</option>
+      <option value="cozy">🏠 Warm & Cozy</option>
+      <option value="sweet">🌸 Sweet & Kind</option>
+      <option value="custom">✨ Custom</option>
+    </select>
+
+    <textarea id="customPrompt" placeholder="Write your custom prompt here..." style="width:100%; min-height:80px; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;"></textarea>
+    <button type="button" class="action-btn" onclick="previewChatTone(); return false;" style="margin-bottom:15px; background:#3498db;">👁️ Preview Nails & Lashes Booking</button>
+    <div id="previewContainer" style="margin-bottom:15px; display:block;">
+      <div style="background:#f9f9f9; padding:20px; border-radius:10px; border-left:4px solid #ff4f87;">
+        <div style="display:flex; align-items:center; margin-bottom:15px;">
+          <span style="background:#ff4f87; color:white; padding:4px 12px; border-radius:20px; font-size:13px; font-weight:bold;">LIVE PREVIEW</span>
+          <span style="margin-left:10px; font-size:13px; color:#666;">Click preview to see conversation</span>
+        </div>
+        <div id="chatPreview" style="font-size:14px; color:#333; line-height:1.6; min-height:100px;">Click the Preview button above to see how your AI will respond to clients booking nails and lashes.</div>
+      </div>
+    </div>
+    <button type="button" class="action-btn" onclick="saveChatSettings(); return false;">💾 Save Chat Style</button>
+    <p id="socialConnectStatus" style="margin-top:10px; font-size:14px;"></p>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>🧪 Social Test</h3>
+    <p style="margin-top:0; color:#666; font-size:14px;">Send a simulated client message through your chat flow before going live.</p>
+    <select id="socialTestPlatform" style="margin-bottom:10px;">
+      <option value="instagram">Instagram</option>
+      <option value="facebook">Facebook</option>
+      <option value="whatsapp">WhatsApp</option>
+      <option value="tiktok">TikTok</option>
+      <option value="telegram">Telegram</option>
+    </select>
+    <input id="socialTestMessage" placeholder="e.g. Hi, I want to book gel nails this Friday" style="margin-bottom:10px;" />
+    <button id="socialTestRunBtn" type="button" class="action-btn" onclick="runSocialTest(event); return false;">▶ Run Test Reply</button>
+    <div id="socialTestOutput" style="margin-top:12px; background:#f9f9f9; border-radius:8px; padding:12px; color:#333;">No test run yet.</div>
+  </div>
+</div>
+
+<div id="profileOnboardingModal" class="onboarding-modal">
+  <div class="onboarding-modal-box">
+    <h2 id="profileSetupModalTitle" style="margin:0 0 6px 0;">Set up your profile</h2>
+    <p id="profileSetupModalSubtitle" style="margin:0;color:#666;">Answer these professional questions to personalize your dashboard and workflow.</p>
+    <form id="profileSetupForm" onsubmit="event.preventDefault(); saveProfileSetup();">
+      <div class="onboarding-form-grid">
+        <div>
+          <label for="profileBusinessEmail">Business Email</label>
+          <input id="profileBusinessEmail" type="email" placeholder="e.g. hello@yourbrand.com" required>
+        </div>
+        <div>
+          <label for="profileBusinessPhone">Business Phone Number</label>
+          <input id="profileBusinessPhone" type="tel" placeholder="e.g. +2348012345678" required>
+        </div>
+        <div>
+          <label for="profileLocation">Business Location</label>
+          <input id="profileLocation" type="text" placeholder="e.g. Lekki, Lagos" required>
+        </div>
+        <div>
+          <label for="profileBusinessType">Business Type</label>
+          <select id="profileBusinessType" required>
+            <option value="">Select business type</option>
+            <option value="Lash Studio">Lash Studio</option>
+            <option value="Nail Studio">Nail Studio</option>
+            <option value="Lash & Nail Studio">Lash & Nail Studio</option>
+            <option value="Beauty Spa">Beauty Spa</option>
+            <option value="Makeup Studio">Makeup Studio</option>
+          </select>
+        </div>
+        <div>
+          <label for="profileExperience">Years of Experience</label>
+          <select id="profileExperience" required>
+            <option value="">Select experience</option>
+            <option value="0-1 years">0-1 years</option>
+            <option value="2-4 years">2-4 years</option>
+            <option value="5-9 years">5-9 years</option>
+            <option value="10+ years">10+ years</option>
+          </select>
+        </div>
+        <div>
+          <label for="profileTeamSize">Team Size</label>
+          <select id="profileTeamSize" required>
+            <option value="">Select team size</option>
+            <option value="Solo">Solo</option>
+            <option value="2-3">2-3</option>
+            <option value="4-10">4-10</option>
+            <option value="10+">10+</option>
+          </select>
+        </div>
+        <div>
+          <label for="profilePrimaryGoal">Primary Goal</label>
+          <select id="profilePrimaryGoal" required>
+            <option value="">Select goal</option>
+            <option value="Get more bookings">Get more bookings</option>
+            <option value="Automate customer replies">Automate customer replies</option>
+            <option value="Organize operations">Organize operations</option>
+            <option value="Scale to multiple staff">Scale to multiple staff</option>
+          </select>
+        </div>
+        <div style="grid-column:1 / -1;">
+          <label for="profileTopServices">Top Services (comma separated)</label>
+          <textarea id="profileTopServices" placeholder="e.g. Classic Lashes, Volume Set, Gel Nails" required></textarea>
+        </div>
+      </div>
+      <div class="onboarding-actions">
+        <button id="profileSetupSubmitBtn" type="submit" class="action-btn">Save Profile & Continue</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
+const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000").replace(/\/+$/, "");
+const stripe = Stripe("pk_test_51RyalQ4uLZc529sjlI1baEBzndCIZtwZFsBJxpH6zOlAAt3RHpTziyeviS8imLaMBHyMdidV6M1djV1XVq281Ic40064fHzKQg");
 
-const token = localStorage.getItem("aiva_token");
-if(!token){
-  window.location.href = "technician_login.html";
+// AUTH
+const token = localStorage.getItem("token") || localStorage.getItem("aiva_token");
+const technicianIdRaw = localStorage.getItem("technician_id") || localStorage.getItem("technicianId");
+const technician_id = (technicianIdRaw && technicianIdRaw !== 'null' && technicianIdRaw !== 'undefined') ? technicianIdRaw : null;
+if(token && !localStorage.getItem("token")) localStorage.setItem("token", token);
+if(technician_id && !localStorage.getItem("technician_id")) localStorage.setItem("technician_id", technician_id);
+const sessionReady = !!token && !!technician_id && !Number.isNaN(parseInt(technician_id, 10));
+const name = localStorage.getItem("business_name") || "Beauty Pro";
+const profileSetupKey = `aiva_profile_setup_${technician_id}`;
+const profileIntroSeenKey = `aiva_profile_intro_seen_${technician_id}`;
+
+document.getElementById('welcomeText').innerText = "Welcome " + name;
+document.getElementById('businessName').innerText = name + " 🌸";
+
+function getSavedProfileSetup(){
+  try {
+    const raw = localStorage.getItem(profileSetupKey);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e){
+    return null;
+  }
 }
 
-const name = localStorage.getItem("aiva_technician_name") || "Beauty Pro";
-const email = localStorage.getItem("aiva_technician_email") || "";
+function setProfileModalMode(isEdit){
+  const titleEl = document.getElementById('profileSetupModalTitle');
+  const subtitleEl = document.getElementById('profileSetupModalSubtitle');
+  const submitBtn = document.getElementById('profileSetupSubmitBtn');
+  if(!titleEl || !subtitleEl || !submitBtn) return;
 
-document.getElementById("welcome-msg").innerHTML =
-  `<h2>Welcome ${name} 💖</h2>
-   <p>Create magical experiences for your clients today ✨</p>`;
+  if(isEdit){
+    titleEl.innerText = 'Edit profile setup';
+    subtitleEl.innerText = 'Update your professional details to keep your dashboard personalized.';
+    submitBtn.innerText = 'Update Profile';
+  } else {
+    titleEl.innerText = 'Set up your profile';
+    subtitleEl.innerText = 'Answer these professional questions to personalize your dashboard and workflow.';
+    submitBtn.innerText = 'Save Profile & Continue';
+  }
+}
 
-document.getElementById("tech-email").textContent =
-  `Logged in as: ${email}`;
+function fillProfileSetupForm(profile){
+  if(!profile) return;
+  if(document.getElementById('profileBusinessEmail')) document.getElementById('profileBusinessEmail').value = profile.business_email || '';
+  if(document.getElementById('profileBusinessPhone')) document.getElementById('profileBusinessPhone').value = profile.business_phone || '';
+  if(document.getElementById('profileLocation')) document.getElementById('profileLocation').value = profile.location || '';
+  if(document.getElementById('profileBusinessType')) document.getElementById('profileBusinessType').value = profile.business_type || '';
+  if(document.getElementById('profileExperience')) document.getElementById('profileExperience').value = profile.experience || '';
+  if(document.getElementById('profileTeamSize')) document.getElementById('profileTeamSize').value = profile.team_size || '';
+  if(document.getElementById('profilePrimaryGoal')) document.getElementById('profilePrimaryGoal').value = profile.primary_goal || '';
+  if(document.getElementById('profileTopServices')) document.getElementById('profileTopServices').value = profile.top_services || '';
+}
 
-document.getElementById("logout").onclick = () => {
-  localStorage.clear();
-  window.location.href = "technician_login.html";
+function openProfileSetupEditor(){
+  const profile = getSavedProfileSetup();
+  setProfileModalMode(true);
+  fillProfileSetupForm(profile);
+  const modal = document.getElementById('profileOnboardingModal');
+  if(modal) modal.style.display = 'flex';
+}
+
+function renderOnboardingWelcome(profile){
+  const businessName = name || 'your brand';
+  const title = `Welcome, ${businessName} ✨`;
+  const intro = `${businessName} is now set up. You can now manage ${profile.business_type || 'your business'} with a ${profile.primary_goal ? profile.primary_goal.toLowerCase() : 'professional workflow'} focus.`;
+  const card = document.getElementById('onboardingWelcomeCard');
+  document.getElementById('onboardingWelcomeTitle').innerText = title;
+  document.getElementById('onboardingWelcomeText').innerText = intro;
+  card.style.display = 'block';
+}
+
+function closeOnboardingWelcome(){
+  const card = document.getElementById('onboardingWelcomeCard');
+  if(card) card.style.display = 'none';
+  localStorage.setItem(profileIntroSeenKey, 'true');
+}
+
+function saveProfileSetup(){
+  const businessEmail = document.getElementById('profileBusinessEmail').value.trim();
+  const businessPhone = document.getElementById('profileBusinessPhone').value.trim();
+  const location = document.getElementById('profileLocation').value.trim();
+  const businessType = document.getElementById('profileBusinessType').value;
+  const experience = document.getElementById('profileExperience').value;
+  const teamSize = document.getElementById('profileTeamSize').value;
+  const primaryGoal = document.getElementById('profilePrimaryGoal').value;
+  const topServices = document.getElementById('profileTopServices').value.trim();
+
+  if(!businessEmail || !businessPhone || !location || !businessType || !experience || !teamSize || !primaryGoal || !topServices){
+    showNotification('Please complete all profile setup questions', 'error');
+    return;
+  }
+
+  const profile = {
+    business_email: businessEmail,
+    business_phone: businessPhone,
+    location,
+    business_type: businessType,
+    experience,
+    team_size: teamSize,
+    primary_goal: primaryGoal,
+    top_services: topServices,
+    completed_at: new Date().toISOString()
+  };
+
+  localStorage.setItem(profileSetupKey, JSON.stringify(profile));
+  localStorage.setItem(profileIntroSeenKey, 'false');
+
+  document.getElementById('profileOnboardingModal').style.display = 'none';
+  show('dashboard');
+  renderOnboardingWelcome(profile);
+  showNotification(`${name} profile setup completed`);
+}
+
+function initProfileOnboarding(){
+  const profile = getSavedProfileSetup();
+  const editBtn = document.getElementById('profileSetupEditBtn');
+  if(!profile){
+    setProfileModalMode(false);
+    const modal = document.getElementById('profileOnboardingModal');
+    if(modal) modal.style.display = 'flex';
+    return;
+  }
+
+  if(editBtn) editBtn.style.display = 'inline-block';
+
+  if(localStorage.getItem(profileIntroSeenKey) !== 'true'){
+    renderOnboardingWelcome(profile);
+  }
+}
+initProfileOnboarding();
+
+// NAVIGATION - NO AUTO REFRESH
+function show(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(id === 'dashboard' && sessionReady){
+    loadRevenueDashboard();
+    loadDashboardNotifications();
+  }
+  if(id === 'staff' && sessionReady){
+    loadStaffMembers();
+  }
+}
+
+if(!sessionReady){
+  setTimeout(() => showNotification('Session expired. Please log in again.', 'error'), 0);
+  setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+}
+
+// SERVICES
+function openModal(){ document.getElementById('modal').style.display="block"; }
+function closeModal(){ document.getElementById('modal').style.display="none"; }
+
+async function saveService(){
+  await fetch(API_URL+"/services", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      technician_id:technician_id,
+      name:document.getElementById('serviceName').value,
+      price:document.getElementById('servicePrice').value,
+      duration:30
+    })
+  });
+  document.getElementById('serviceName').value="";
+  document.getElementById('servicePrice').value="";
+  closeModal();
+  loadServices();
+}
+
+async function loadServices(){
+  if(!sessionReady) return;
+  const res = await fetch(API_URL+"/services/"+technician_id);
+  const data = await res.json();
+  let html = "";
+  data.forEach(s=>{ html += `<p>${s.name} — ₦${s.price}</p>`; });
+  document.getElementById('servicesList').innerHTML = html;
+  document.getElementById('totalServices').innerText = data.length;
+}
+if(sessionReady) loadServices();
+
+// AVAILABILITY - LOCAL STORAGE ONLY
+function saveAvailability(){
+  const availability = {
+    mon: {start: mon_start.value || null, end: mon_end.value || null},
+    tue: {start: tue_start.value || null, end: tue_end.value || null},
+    wed: {start: wed_start.value || null, end: wed_end.value || null},
+    thu: {start: thu_start.value || null, end: thu_end.value || null},
+    fri: {start: fri_start.value || null, end: fri_end.value || null},
+    sat: {start: sat_start.value || null, end: sat_end.value || null},
+    sun: {start: sun_start.value || null, end: sun_end.value || null}
+  };
+  localStorage.setItem('availability', JSON.stringify(availability));
+  document.getElementById('availabilityStatus').innerText = 'Availability saved';
+  updateAvailabilitySummary(availability);
+}
+
+function loadAvailability(){
+  const raw = localStorage.getItem('availability');
+  if(!raw) return;
+  const a = JSON.parse(raw);
+  if(a.mon){ mon_start.value = a.mon.start || ''; mon_end.value = a.mon.end || ''; }
+  if(a.tue){ tue_start.value = a.tue.start || ''; tue_end.value = a.tue.end || ''; }
+  if(a.wed){ wed_start.value = a.wed.start || ''; wed_end.value = a.wed.end || ''; }
+  if(a.thu){ thu_start.value = a.thu.start || ''; thu_end.value = a.thu.end || ''; }
+  if(a.fri){ fri_start.value = a.fri.start || ''; fri_end.value = a.fri.end || ''; }
+  if(a.sat){ sat_start.value = a.sat.start || ''; sat_end.value = a.sat.end || ''; }
+  if(a.sun){ sun_start.value = a.sun.start || ''; sun_end.value = a.sun.end || ''; }
+  updateAvailabilitySummary(a);
+}
+
+function updateAvailabilitySummary(a){
+  const lines = [];
+  const names = {mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
+  Object.keys(names).forEach(k=>{
+    const day = a[k];
+    if(day && day.start && day.end) lines.push(`${names[k]} ${day.start} - ${day.end}`);
+  });
+  document.getElementById('availabilitySummary').innerHTML = lines.length ? '<p>'+lines.join('</p><p>')+'</p>' : '<p>No availability set yet</p>';
+  const openDays = Object.keys(names).filter(k=> a[k]?.start && a[k]?.end).map(k=> names[k].substring(0,3));
+  document.getElementById('workingDays').innerText = openDays.length ? openDays.join(', ') : 'Not set';
+  document.getElementById('dashboardAvailabilitySummary').innerText = openDays.length ? openDays.join(' • ') : 'No availability set yet';
+}
+loadAvailability();
+
+// BOOKINGS - LOAD ONCE
+async function loadBookings(){
+  if(!sessionReady) return;
+  try {
+    const res = await fetch(API_URL + '/bookings/' + technician_id, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    const bookings = data.bookings || [];
+    if(bookings.length === 0){
+      document.getElementById('bookingsTable').innerHTML = '<tr><td colspan="8" style="padding:10px;text-align:center;color:#999">No confirmed bookings yet</td></tr>';
+      return;
+    }
+    let html = '';
+    bookings.forEach(b => {
+      const source = (b.booking_source || 'website').toLowerCase();
+      const sourceLabel = source === 'ai' ? 'AI' : 'Website';
+      html += `<tr><td style="padding:10px">${b.client_name || 'Unknown'}</td><td style="padding:10px">${b.client_phone || '-'}</td><td style="padding:10px">${b.service_name || 'Service'}</td><td style="padding:10px">${b.staff_name || '-'}</td><td style="padding:10px">${new Date(b.appointment_date).toLocaleDateString()}</td><td style="padding:10px">${b.appointment_time || '-'}</td><td style="padding:10px">${sourceLabel}</td><td style="padding:10px;color:${b.payment_status === 'paid' ? '#27ae60' : '#e74c3c'}">${b.payment_status || 'pending'}</td></tr>`;
+    });
+    document.getElementById('bookingsTable').innerHTML = html;
+  } catch(e) { console.error('loadBookings error:', e); }
+}
+if(sessionReady) loadBookings();
+
+function escapeHtml(value){
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatNotificationTime(isoText){
+  if(!isoText) return 'Unknown time';
+  const date = new Date(isoText);
+  if(Number.isNaN(date.getTime())) return isoText;
+  return date.toLocaleString();
+}
+
+function renderDashboardNotifications(items){
+  const target = document.getElementById('dashboardNotifList');
+  if(!target) return;
+  if(!items || !items.length){
+    target.innerHTML = '<div style="color:#666;font-size:13px;">No notifications yet.</div>';
+    return;
+  }
+
+  let html = '';
+  items.forEach(item => {
+    const typeLabel = item.event_type === 'complaint_created' ? 'Complaint' : 'Booking';
+    const readClass = item.is_read ? 'read' : '';
+    html += `<div class="dashboard-notify-item ${readClass}">`
+      + `<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">`
+      + `<div><b>${escapeHtml(item.title)}</b> <span style="font-size:11px;color:#b83a6c;">${typeLabel}</span>`
+      + `<div style="margin-top:4px;color:#333;">${escapeHtml(item.message)}</div>`
+      + `<div class="dashboard-notify-meta">${formatNotificationTime(item.created_at)}</div></div>`
+      + (!item.is_read ? `<button class="secondary-btn" type="button" onclick="markDashboardNotificationRead(${item.id})">Mark read</button>` : '')
+      + `</div></div>`;
+  });
+  target.innerHTML = html;
+}
+
+async function loadDashboardNotifications(){
+  if(!sessionReady) return;
+  const statusEl = document.getElementById('dashboardNotifStatus');
+  const badgeEl = document.getElementById('dashboardNotifUnread');
+
+  try {
+    const res = await fetch(`${API_URL}/notifications/${technician_id}?limit=20`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if(!res.ok){
+      if(statusEl) statusEl.innerText = data.detail || 'Could not load notifications';
+      return;
+    }
+
+    renderDashboardNotifications(data.notifications || []);
+    if(badgeEl) badgeEl.innerText = `${data.unread_count || 0} unread`;
+    if(statusEl) statusEl.innerText = 'Notifications updated';
+  } catch(_){
+    if(statusEl) statusEl.innerText = 'Could not load notifications right now';
+  }
+}
+
+async function markDashboardNotificationRead(notificationId){
+  if(!sessionReady) return;
+  try {
+    const res = await fetch(`${API_URL}/notifications/${notificationId}/read`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body: JSON.stringify({ technician_id: parseInt(technician_id) })
+    });
+    if(res.ok){
+      loadDashboardNotifications();
+    }
+  } catch(_){ }
+}
+
+async function markAllDashboardNotificationsRead(){
+  if(!sessionReady) return;
+  try {
+    const res = await fetch(`${API_URL}/notifications/mark-all-read`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body: JSON.stringify({ technician_id: parseInt(technician_id) })
+    });
+    const data = await res.json();
+    if(!res.ok){
+      showNotification(data.detail || 'Could not mark notifications as read', 'error');
+      return;
+    }
+    loadDashboardNotifications();
+  } catch(_){
+    showNotification('Could not mark notifications as read', 'error');
+  }
+}
+
+async function submitComplaintFromDashboard(){
+  if(!sessionReady) return;
+  const nameEl = document.getElementById('complaintClientName');
+  const textEl = document.getElementById('complaintText');
+  const clientName = (nameEl?.value || '').trim();
+  const complaintText = (textEl?.value || '').trim();
+
+  if(!clientName || !complaintText){
+    showNotification('Enter client name and complaint text', 'error');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/complaints`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body: JSON.stringify({
+        technician_id: parseInt(technician_id),
+        client_name: clientName,
+        complaint_text: complaintText
+      })
+    });
+    const data = await res.json();
+    if(!res.ok){
+      showNotification(data.detail || 'Could not submit complaint', 'error');
+      return;
+    }
+    if(nameEl) nameEl.value = '';
+    if(textEl) textEl.value = '';
+    showNotification('Complaint submitted');
+    loadDashboardNotifications();
+  } catch(_){
+    showNotification('Could not submit complaint', 'error');
+  }
+}
+
+let editingStaffId = null;
+
+function resetStaffForm(){
+  editingStaffId = null;
+  const nameEl = document.getElementById('staffName');
+  const roleEl = document.getElementById('staffRole');
+  const btnEl = document.getElementById('staffSaveBtn');
+  if(nameEl) nameEl.value = '';
+  if(roleEl) roleEl.value = '';
+  if(btnEl) btnEl.innerText = 'Add Staff';
+}
+
+function renderStaffList(items){
+  const target = document.getElementById('staffList');
+  if(!target) return;
+  if(!items || !items.length){
+    target.innerHTML = '<p style="color:#777;">No staff members added yet.</p>';
+    return;
+  }
+
+  let html = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  items.forEach(s => {
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #eee;border-radius:10px;padding:10px;background:#fff;">`
+      + `<div><b>${s.full_name || 'Staff'}</b><div style="font-size:12px;color:#666;">${s.role || 'No role'} • ${s.active ? 'Active' : 'Inactive'}</div></div>`
+      + `<div style="display:flex;gap:6px;">`
+      + `<button class="secondary-btn" type="button" onclick="editStaffMember(${s.id}, '${String(s.full_name || '').replace(/'/g, "\\'")}', '${String(s.role || '').replace(/'/g, "\\'")}', ${s.active ? 'true' : 'false'})">Edit</button>`
+      + `<button class="secondary-btn" type="button" onclick="deleteStaffMember(${s.id})" style="background:#ffe5e5;color:#a62222;">Delete</button>`
+      + `</div></div>`;
+  });
+  html += '</div>';
+  target.innerHTML = html;
+}
+
+function editStaffMember(id, fullName, role, active){
+  editingStaffId = id;
+  const nameEl = document.getElementById('staffName');
+  const roleEl = document.getElementById('staffRole');
+  const btnEl = document.getElementById('staffSaveBtn');
+  if(nameEl) nameEl.value = fullName || '';
+  if(roleEl) roleEl.value = role || '';
+  if(btnEl) btnEl.innerText = active ? 'Update Staff' : 'Re-activate & Update';
+}
+
+async function loadStaffMembers(){
+  if(!sessionReady) return;
+  const statusEl = document.getElementById('staffStatus');
+  const upgradeEl = document.getElementById('staffUpgradePrompt');
+  const listEl = document.getElementById('staffList');
+  if(statusEl) statusEl.innerText = 'Loading staff...';
+
+  try {
+    const res = await fetch(`${API_URL}/staff/${technician_id}`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if(!res.ok){
+      if(res.status === 403){
+        if(upgradeEl) upgradeEl.style.display = 'block';
+        if(listEl) listEl.innerHTML = '<p style="color:#8a2b4c;">Upgrade to Premium to manage staff.</p>';
+        if(statusEl) statusEl.innerText = data.detail || 'Premium plan required';
+        return;
+      }
+      if(statusEl) statusEl.innerText = data.detail || 'Could not load staff.';
+      return;
+    }
+
+    if(upgradeEl) upgradeEl.style.display = 'none';
+    renderStaffList(data.staff || []);
+    if(statusEl) statusEl.innerText = 'Staff list updated';
+  } catch(_){
+    if(statusEl) statusEl.innerText = 'Could not load staff right now.';
+  }
+}
+
+async function saveStaffMember(){
+  if(!sessionReady) return;
+  const name = (document.getElementById('staffName')?.value || '').trim();
+  const role = (document.getElementById('staffRole')?.value || '').trim();
+  const statusEl = document.getElementById('staffStatus');
+  if(!name){
+    if(statusEl) statusEl.innerText = 'Enter staff name first.';
+    return;
+  }
+
+  const isUpdate = !!editingStaffId;
+  const url = isUpdate ? `${API_URL}/staff/${editingStaffId}` : `${API_URL}/staff`;
+  const method = isUpdate ? 'PUT' : 'POST';
+
+  if(statusEl) statusEl.innerText = isUpdate ? 'Updating staff...' : 'Adding staff...';
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: {'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body: JSON.stringify({
+        technician_id: parseInt(technician_id),
+        full_name: name,
+        role,
+        active: true
+      })
+    });
+    const data = await res.json();
+    if(!res.ok){
+      if(res.status === 403){
+        handleLockedFeature(data.detail || 'Premium plan required for staff management.');
+      }
+      if(statusEl) statusEl.innerText = data.detail || 'Could not save staff.';
+      return;
+    }
+
+    resetStaffForm();
+    if(statusEl) statusEl.innerText = isUpdate ? 'Staff updated' : 'Staff added';
+    loadStaffMembers();
+  } catch(_){
+    if(statusEl) statusEl.innerText = 'Could not save staff right now.';
+  }
+}
+
+async function deleteStaffMember(staffId){
+  if(!sessionReady) return;
+  if(!confirm('Delete this staff member?')) return;
+  const statusEl = document.getElementById('staffStatus');
+  if(statusEl) statusEl.innerText = 'Deleting staff...';
+
+  try {
+    const res = await fetch(`${API_URL}/staff/${staffId}?technician_id=${technician_id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if(!res.ok){
+      if(res.status === 403){
+        handleLockedFeature(data.detail || 'Premium plan required for staff management.');
+      }
+      if(statusEl) statusEl.innerText = data.detail || 'Could not delete staff.';
+      return;
+    }
+    if(statusEl) statusEl.innerText = 'Staff deleted';
+    if(editingStaffId === staffId) resetStaffForm();
+    loadStaffMembers();
+  } catch(_){
+    if(statusEl) statusEl.innerText = 'Could not delete staff right now.';
+  }
+}
+
+if(sessionReady) loadStaffMembers();
+
+// PAYMENT
+function loadPaymentSettings(){
+  try{
+    const raw = localStorage.getItem('payment_settings');
+    if(!raw) return;
+    const s = JSON.parse(raw);
+    if(document.getElementById('paymentProvider')) document.getElementById('paymentProvider').value = s.provider;
+    if(document.getElementById('bankName')) document.getElementById('bankName').value = s.bank_name;
+    if(document.getElementById('accountNumber')) document.getElementById('accountNumber').value = s.account_number;
+    document.getElementById('paymentMethod').innerText = s.provider ? s.provider.toUpperCase() : 'Not Set';
+    document.getElementById('savedBankInfo').innerText = s.bank_name ? `${s.bank_name} — ${s.account_number}` : '';
+  }catch(e){}
+}
+loadPaymentSettings();
+
+async function savePayment(){
+  const provider = document.getElementById('paymentProvider').value;
+  const bankNameVal = document.getElementById('bankName').value;
+  const accountNumberVal = document.getElementById('accountNumber').value;
+  localStorage.setItem('payment_settings', JSON.stringify({provider, bank_name: bankNameVal, account_number: accountNumberVal}));
+  document.getElementById('paymentMethod').innerText = provider ? provider.toUpperCase() : 'Not Set';
+  document.getElementById('savedBankInfo').innerText = bankNameVal ? `${bankNameVal} — ${accountNumberVal}` : '';
+  document.getElementById('paymentStatus').innerText = 'Payment settings saved';
+  showNotification('Payment settings saved!');
+}
+
+// PLAN
+function setPlan(plan){ localStorage.setItem('plan', plan); loadPlan(); showNotification('Plan set to '+plan); }
+function planLabel(planValue){
+  const p = (planValue || 'free').toLowerCase();
+  if(p === 'basic') return 'Starter';
+  if(p === 'starter') return 'Starter';
+  if(p === 'pro') return 'Pro';
+  if(p === 'premium') return 'Premium';
+  if(p === 'trial') return 'Free Trial';
+  return 'Free';
+}
+
+function normalizePlanForMatrix(planValue){
+  const p = (planValue || 'free').toLowerCase();
+  if(p === 'trial') return 'premium';
+  if(p === 'basic') return 'starter';
+  if(['free','starter','pro','premium'].includes(p)) return p;
+  return 'free';
+}
+
+function highlightCurrentPlanColumn(planValue){
+  const matrix = document.getElementById('planFeatureMatrix');
+  if(!matrix) return;
+  const normalized = normalizePlanForMatrix(planValue);
+  matrix.querySelectorAll('[data-plan-col]').forEach(cell => {
+    cell.classList.toggle('feature-plan-current', cell.getAttribute('data-plan-col') === normalized);
+  });
+}
+
+async function loadPlan(){
+  const storedPlan = localStorage.getItem('plan') || 'free';
+  document.getElementById('currentPlan').innerText = planLabel(storedPlan);
+  highlightCurrentPlanColumn(storedPlan);
+  updateTrialUpgradeNotice({ plan: storedPlan, status: 'unknown' });
+
+  if(!sessionReady) return;
+
+  try {
+    const res = await fetch(`${API_URL}/subscription/status/${technician_id}`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    const backendPlan = (data.plan || 'free').toLowerCase();
+    localStorage.setItem('plan', backendPlan);
+    document.getElementById('currentPlan').innerText = planLabel(backendPlan);
+    highlightCurrentPlanColumn(backendPlan);
+    updateTrialUpgradeNotice(data);
+  } catch(_) {
+    // keep local fallback
+  }
+}
+loadPlan();
+
+function updateTrialUpgradeNotice(subscriptionData){
+  const notice = document.getElementById('subscriptionTrialNotice');
+  if(!notice) return;
+
+  const plan = String(subscriptionData?.plan || 'free').toLowerCase();
+  const status = String(subscriptionData?.status || '').toLowerCase();
+  const daysLeft = Number(subscriptionData?.trial_days_left || 0);
+  const upgradeRequired = Boolean(subscriptionData?.upgrade_required) || (plan === 'free' && status === 'expired');
+
+  if(plan === 'trial'){
+    notice.style.display = 'block';
+    notice.innerHTML = `<b>7-day free trial active.</b> You currently have full access.${daysLeft > 0 ? ` ${daysLeft} day${daysLeft === 1 ? '' : 's'} left.` : ''}`;
+    return;
+  }
+
+  if(upgradeRequired){
+    notice.style.display = 'block';
+    notice.innerHTML = '<b>Your free trial has ended.</b> Upgrade to Starter, Pro, or Premium to continue advanced features.';
+    const shownKey = `aiva_trial_upgrade_prompt_${technician_id || 'guest'}`;
+    if(sessionStorage.getItem(shownKey) !== 'true'){
+      showNotification('Your 7-day trial has ended. Please upgrade to continue advanced features.', 'error');
+      sessionStorage.setItem(shownKey, 'true');
+    }
+    return;
+  }
+
+  notice.style.display = 'none';
+  notice.innerHTML = '';
+}
+
+async function reconcileStripeReturn(){
+  if(!sessionReady) return;
+  const sessionId = new URLSearchParams(window.location.search).get('session_id');
+  if(!sessionId) return;
+
+  try {
+    const res = await fetch(`${API_URL}/stripe/confirm-session/${sessionId}`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if(data.success && data.plan){
+      localStorage.setItem('plan', String(data.plan).toLowerCase());
+      document.getElementById('currentPlan').innerText = planLabel(data.plan);
+      showNotification(`Plan updated to ${planLabel(data.plan)}`);
+      localStorage.removeItem('pending_plan');
+    }
+  } catch(_) {
+    // If confirm endpoint fails, regular plan status fetch will still run
+  } finally {
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+    loadPlan();
+  }
+}
+reconcileStripeReturn();
+
+let selectedCheckoutMethod = 'card';
+const checkoutMethodLabels = {
+  card: 'Card',
+  bank_transfer: 'Bank Transfer',
+  ussd: 'USSD',
+  wallet: 'Wallet'
 };
 
-</script>
+async function subscribePlan(plan){
+  localStorage.setItem('pending_plan', plan);
+  document.getElementById('subscriptionCheckoutCard').style.display = 'block';
+  document.getElementById('checkoutPlanLabel').innerText = `Selected plan: ${plan.toUpperCase()}`;
+  showNotification(`Choose payment method for ${plan.toUpperCase()} and continue to Stripe`);
+}
 
+function selectCheckoutMethod(method){
+  selectedCheckoutMethod = method;
+  document.querySelectorAll('.checkout-method-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.method === method);
+  });
+  const label = checkoutMethodLabels[method] || 'Card';
+  document.getElementById('checkoutMethodLabel').innerText = `Payment method: ${label}`;
+}
+
+function cancelSubscriptionCheckout(){
+  document.getElementById('subscriptionCheckoutCard').style.display = 'none';
+  localStorage.removeItem('pending_plan');
+}
+
+function continueSubscriptionCheckout(){
+  const plan = localStorage.getItem('pending_plan');
+  if(!plan){
+    showNotification('Select a plan first', 'error');
+    return;
+  }
+  startStripeCheckout(plan, selectedCheckoutMethod);
+}
+
+async function startStripeCheckout(plan, paymentMethod='card'){
+  if(!sessionReady){
+    showNotification('Please log in again before starting checkout', 'error');
+    setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+    return;
+  }
+  try {
+    const response = await fetch(API_URL + "/stripe/create-checkout-session", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        technician_id: technician_id ? parseInt(technician_id) : null,
+        plan,
+        payment_method: paymentMethod
+      })
+    });
+
+    let data = {};
+    try {
+      data = await response.json();
+    } catch(_){
+      data = {};
+    }
+
+    if(response.ok && data.checkout_url) {
+      localStorage.setItem('plan', String(plan).toLowerCase());
+      window.location.href = data.checkout_url;
+      return;
+    }
+
+    const detail = data.detail || data.message || `Stripe session failed (${response.status})`;
+    showNotification(detail, "error");
+  } catch(e){
+    showNotification(`Could not connect to Stripe: ${e?.message || 'Network error'}`, "error");
+  }
+}
+
+// ========== SIMPLE SOCIAL MEDIA FUNCTIONS ==========
+let whatsappModal = null;
+let connectedAccountsCache = [];
+let socialMessageCache = [];
+let socialAutoRefreshTimer = null;
+let dashboardNotificationTimer = null;
+let activeHandoffSessionSet = new Set();
+let selectedSessionForDrawer = null;
+const baseSocialTestPlatforms = ['instagram','facebook','whatsapp','tiktok','telegram'];
+
+function formatAccountTag(platform, accountName){
+  if(!accountName) return 'Unknown account';
+  if(platform === 'instagram' || platform === 'tiktok' || platform === 'telegram') return `@${accountName}`;
+  return accountName;
+}
+
+function updateSetupChecklist(accounts){
+  const connected = accounts.length > 0;
+  const toneSaved = !!document.getElementById('chatTone')?.value;
+  const tested = localStorage.getItem('social_test_done') === 'true';
+
+  document.getElementById('stepConnect').innerText = `${connected ? '✅' : '1)'} Connect at least one channel`;
+  document.getElementById('stepTone').innerText = `${toneSaved ? '✅' : '2)'} Save your AI chat style`;
+  document.getElementById('stepTest').innerText = `${tested ? '✅' : '3)'} Send a test message from Social Test`;
+
+  const health = document.getElementById('socialHealthStatus');
+  if(connected && toneSaved && tested){
+    health.innerText = 'Status: ✅ Social Hub is ready for live conversations';
+    health.style.color = '#27ae60';
+  } else if(connected) {
+    health.innerText = 'Status: ⚠️ Almost ready - complete remaining setup steps';
+    health.style.color = '#e67e22';
+  } else {
+    health.innerText = 'Status: waiting for setup';
+    health.style.color = '#444';
+  }
+}
+
+function applyAccountToPlatformCard(platform, accountName){
+  const statusEl = document.getElementById(platform+'Status');
+  const infoEl = document.getElementById(platform+'ConnectedInfo');
+  const nameEl = document.getElementById({
+    'instagram':'instagramUsername',
+    'facebook':'facebookPageName',
+    'whatsapp':'whatsappNumber',
+    'tiktok':'tiktokUsername',
+    'telegram':'telegramUsername'
+  }[platform] || (platform+'Username'));
+
+  if(statusEl) statusEl.innerHTML = '<span class="status-dot connected"></span> Connected';
+  if(infoEl) infoEl.style.display = 'block';
+  if(nameEl) nameEl.innerText = accountName || 'Connected';
+}
+
+function resetPlatformCard(platform){
+  const statusEl = document.getElementById(platform+'Status');
+  const infoEl = document.getElementById(platform+'ConnectedInfo');
+  if(statusEl) statusEl.innerHTML = '<span class="status-dot disconnected"></span> Not Connected';
+  if(infoEl) infoEl.style.display = 'none';
+}
+
+function loadSocialAutomation(){
+  fetch(`${API_URL}/social/automation-settings/${technician_id}`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(async res => ({ ok: res.ok, status: res.status, data: await res.json() }))
+  .then(({ ok, status, data }) => {
+    if(!ok){
+      if(status === 403){
+        handleLockedFeature(data.detail || 'Your free trial has ended. Upgrade to continue.');
+      }
+      return;
+    }
+    document.getElementById('autoReplyEnabled').checked = data.auto_reply_enabled !== false;
+    if(typeof data.welcome_dm_template === 'string' && data.welcome_dm_template.length){
+      document.getElementById('welcomeDmTemplate').value = data.welcome_dm_template;
+    }
+  })
+  .catch(() => {
+    // fallback: keep default UI values
+  });
+}
+
+function saveSocialAutomation(){
+  const autoReply = document.getElementById('autoReplyEnabled').checked;
+  const welcomeTemplate = document.getElementById('welcomeDmTemplate').value.trim();
+  const statusEl = document.getElementById('socialAutomationStatus');
+
+  statusEl.innerText = 'Saving...';
+  statusEl.style.color = '#666';
+
+  fetch(`${API_URL}/social/automation-settings`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+    body:JSON.stringify({
+      technician_id: parseInt(technician_id),
+      auto_reply_enabled: autoReply,
+      welcome_dm_template: welcomeTemplate
+    })
+  })
+  .then(async res => ({ ok: res.ok, status: res.status, data: await res.json() }))
+  .then(({ ok, status, data }) => {
+    if(!ok){
+      if(status === 403){
+        handleLockedFeature(data.detail || 'Your free trial has ended. Upgrade to continue.');
+      }
+      statusEl.innerText = '❌ Save failed';
+      statusEl.style.color = '#e74c3c';
+      return;
+    }
+    if(data.success){
+      statusEl.innerText = '✅ Automation saved';
+      statusEl.style.color = '#27ae60';
+    } else {
+      statusEl.innerText = '❌ Save failed';
+      statusEl.style.color = '#e74c3c';
+    }
+  })
+  .catch(() => {
+    statusEl.innerText = '❌ Save failed';
+    statusEl.style.color = '#e74c3c';
+  });
+}
+
+function showNotification(msg, type='success'){
+  const n = document.createElement('div');
+  n.className = `notification ${type}`;
+  n.innerText = msg;
+  document.body.appendChild(n);
+  setTimeout(() => n.remove(), 3000);
+}
+
+function handleLockedFeature(message){
+  showNotification(message || 'Your free trial has ended. Upgrade to Starter, Pro, or Premium.', 'error');
+  show('plans');
+}
+
+function formatGBP(amount){
+  const value = Number(amount || 0);
+  return `£${value.toFixed(2)}`;
+}
+
+function renderRevenueTrend(trendRows){
+  const target = document.getElementById('revenueTrendBars');
+  if(!target) return;
+
+  const rows = Array.isArray(trendRows) ? trendRows.slice(-14) : [];
+  if(!rows.length){
+    target.innerHTML = '<div style="font-size:12px;color:#999;">No trend data yet.</div>';
+    return;
+  }
+
+  const maxRevenue = Math.max(...rows.map(r => Number(r.revenue || 0)), 0);
+  target.innerHTML = rows.map(r => {
+    const revenue = Number(r.revenue || 0);
+    const height = maxRevenue > 0 ? Math.max(6, Math.round((revenue / maxRevenue) * 100)) : 6;
+    return `<div title="${r.date}: ${formatGBP(revenue)}" style="flex:1;min-width:8px;background:linear-gradient(180deg,#ff7fb0,#ff4f87);height:${height}px;border-radius:4px 4px 0 0;"></div>`;
+  }).join('');
+}
+
+function renderTopRevenueServices(items){
+  const target = document.getElementById('revenueTopServices');
+  if(!target) return;
+  const rows = Array.isArray(items) ? items : [];
+  if(!rows.length){
+    target.innerHTML = 'No service data yet.';
+    return;
+  }
+  let html = '<div style="display:flex;flex-direction:column;gap:6px;">';
+  rows.slice(0,5).forEach((item, index) => {
+    html += `<div style="display:flex;justify-content:space-between;gap:8px;"><span>${index+1}. ${item.service_name || 'Service'}</span><b>${formatGBP(item.revenue || 0)}</b></div>`;
+  });
+  html += '</div>';
+  target.innerHTML = html;
+}
+
+function setRevenueLoadingState(message){
+  const status = document.getElementById('revenueStatus');
+  if(status) status.innerText = message;
+}
+
+function clearRevenueCards(){
+  if(document.getElementById('revConfirmed')) document.getElementById('revConfirmed').innerText = '£0.00';
+  if(document.getElementById('revBookings')) document.getElementById('revBookings').innerText = '0';
+  if(document.getElementById('revAvgTicket')) document.getElementById('revAvgTicket').innerText = '£0.00';
+  if(document.getElementById('revPending')) document.getElementById('revPending').innerText = '£0.00';
+  renderRevenueTrend([]);
+  renderTopRevenueServices([]);
+}
+
+async function loadRevenueDashboard(){
+  if(!sessionReady) return;
+
+  const periodEl = document.getElementById('revenuePeriodDays');
+  const period = Number(periodEl?.value || 30);
+  const upgradePrompt = document.getElementById('revenueUpgradePrompt');
+
+  setRevenueLoadingState('Loading revenue metrics...');
+
+  try {
+    const res = await fetch(`${API_URL}/dashboard/revenue/${technician_id}?days=${period}`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+
+    if(!res.ok){
+      clearRevenueCards();
+      if(res.status === 403){
+        if(upgradePrompt) upgradePrompt.style.display = 'block';
+        setRevenueLoadingState(data.detail || 'Upgrade to Premium to view revenue dashboard.');
+        return;
+      }
+      if(upgradePrompt) upgradePrompt.style.display = 'none';
+      setRevenueLoadingState(data.detail || 'Could not load revenue dashboard right now.');
+      return;
+    }
+
+    if(upgradePrompt) upgradePrompt.style.display = 'none';
+    const totals = data.totals || {};
+
+    document.getElementById('revConfirmed').innerText = formatGBP(totals.confirmed_revenue || 0);
+    document.getElementById('revBookings').innerText = String(totals.confirmed_bookings || 0);
+    document.getElementById('revAvgTicket').innerText = formatGBP(totals.average_ticket || 0);
+    document.getElementById('revPending').innerText = formatGBP(totals.pending_revenue || 0);
+
+    renderRevenueTrend(data.trend || []);
+    renderTopRevenueServices(data.top_services || []);
+
+    setRevenueLoadingState(`Updated for last ${data.period_days || period} day(s).`);
+  } catch(_){
+    clearRevenueCards();
+    setRevenueLoadingState('Could not load revenue dashboard right now.');
+  }
+}
+
+function loadSocialAnalytics(){
+  fetch(`${API_URL}/social/analytics/${technician_id}`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('analyticsConnected').innerText = data.connected_channels || 0;
+    document.getElementById('analyticsSessions').innerText = data.active_sessions || 0;
+    document.getElementById('analyticsIncoming').innerText = data.incoming_messages || 0;
+    document.getElementById('analyticsOutgoing').innerText = data.outgoing_messages || 0;
+    document.getElementById('analyticsFailed').innerText = data.failed_outgoing || 0;
+
+    const breakdown = data.channel_breakdown || {};
+    const keys = Object.keys(breakdown);
+    if(!keys.length){
+      document.getElementById('analyticsChannels').innerText = 'No channel data yet.';
+      return;
+    }
+
+    let html = '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+    keys.forEach(k => {
+      const item = breakdown[k] || {incoming:0,outgoing:0};
+      html += `<div style="background:#f5f5f5;padding:8px 10px;border-radius:8px;"><strong>${k}</strong>: ${item.incoming} in / ${item.outgoing} out</div>`;
+    });
+    html += '</div>';
+    document.getElementById('analyticsChannels').innerHTML = html;
+  })
+  .catch(() => {
+    document.getElementById('analyticsChannels').innerText = 'Could not load analytics right now.';
+  });
+}
+
+function renderSocialMessageTable(rows){
+  const target = document.getElementById('socialInboxTable');
+  if(!rows.length){
+    target.innerHTML = '<div style="padding:10px; color:#666;">No messages match this filter.</div>';
+    return;
+  }
+
+  let html = '<table style="width:100%; border-collapse:collapse; font-size:13px;">';
+  html += '<thead><tr style="background:#f5f5f5; text-align:left;">'
+    + '<th style="padding:8px; border-bottom:1px solid #eee;">Time</th>'
+    + '<th style="padding:8px; border-bottom:1px solid #eee;">Channel</th>'
+    + '<th style="padding:8px; border-bottom:1px solid #eee;">Direction</th>'
+    + '<th style="padding:8px; border-bottom:1px solid #eee;">Status</th>'
+    + '<th style="padding:8px; border-bottom:1px solid #eee;">Message</th>'
+    + '<th style="padding:8px; border-bottom:1px solid #eee;">Action</th>'
+    + '</tr></thead><tbody>';
+
+  rows.forEach(item => {
+    const safeContent = escapeHtml(item.message_content || '').slice(0, 140);
+    const statusColor = item.status === 'failed' ? '#e74c3c' : (item.status === 'sent' ? '#27ae60' : '#555');
+    const sessionId = item.session_id || '';
+    const isPaused = sessionId && activeHandoffSessionSet.has(sessionId);
+    const accountId = (item.direction || '').toLowerCase() === 'incoming' ? (item.sender_id || '') : (item.recipient_id || '');
+    const platform = item.platform || '';
+    let actionHtml = '<span style="color:#999;">N/A</span>';
+    const viewBtn = sessionId
+      ? `<button type="button" onclick="openSessionDrawer('${escapeHtml(sessionId)}')" style="background:#3498db;color:#fff;border:none;padding:5px 8px;border-radius:6px;cursor:pointer;">View</button>`
+      : '';
+    if(sessionId){
+      if(isPaused){
+        actionHtml = `${viewBtn} <button type="button" onclick="quickResumeHandoff('${escapeHtml(sessionId)}')" style="background:#27ae60;color:#fff;border:none;padding:5px 8px;border-radius:6px;cursor:pointer;">Resume</button>`;
+      } else {
+        actionHtml = `${viewBtn} <button type="button" onclick="quickPauseHandoff('${escapeHtml(sessionId)}')" style="background:#f39c12;color:#fff;border:none;padding:5px 8px;border-radius:6px;cursor:pointer;">Pause</button>`;
+      }
+    } else if(platform && accountId){
+      actionHtml = `<button type="button" onclick="quickPauseByAccount('${escapeHtml(platform)}','${escapeHtml(accountId)}')" style="background:#f39c12;color:#fff;border:none;padding:5px 8px;border-radius:6px;cursor:pointer;">Pause</button>`;
+    }
+    html += `<tr>`
+      + `<td style="padding:8px; border-bottom:1px solid #f1f1f1; white-space:nowrap;">${escapeHtml(item.created_at || '-')}</td>`
+      + `<td style="padding:8px; border-bottom:1px solid #f1f1f1; text-transform:capitalize;">${escapeHtml(item.platform || '-')}</td>`
+      + `<td style="padding:8px; border-bottom:1px solid #f1f1f1; text-transform:capitalize;">${escapeHtml(item.direction || '-')}</td>`
+      + `<td style="padding:8px; border-bottom:1px solid #f1f1f1; color:${statusColor}; text-transform:capitalize;">${escapeHtml(item.status || '-')}</td>`
+      + `<td style="padding:8px; border-bottom:1px solid #f1f1f1;">${safeContent || '-'}</td>`
+      + `<td style="padding:8px; border-bottom:1px solid #f1f1f1;">${actionHtml}</td>`
+      + `</tr>`;
+  });
+
+  html += '</tbody></table>';
+  target.innerHTML = html;
+}
+
+function applyInboxFilters(){
+  const channel = (document.getElementById('messageFilterChannel')?.value || 'all').toLowerCase();
+  const direction = (document.getElementById('messageFilterDirection')?.value || 'all').toLowerCase();
+  const status = (document.getElementById('messageFilterStatus')?.value || 'all').toLowerCase();
+  const search = (document.getElementById('messageSearch')?.value || '').trim().toLowerCase();
+
+  const filtered = socialMessageCache.filter(item => {
+    if(channel !== 'all' && (item.platform || '').toLowerCase() !== channel) return false;
+    if(direction !== 'all' && (item.direction || '').toLowerCase() !== direction) return false;
+    if(status !== 'all' && (item.status || '').toLowerCase() !== status) return false;
+    if(search){
+      const hay = `${item.message_content || ''} ${item.sender_id || ''} ${item.recipient_id || ''} ${item.session_id || ''}`.toLowerCase();
+      if(!hay.includes(search)) return false;
+    }
+    return true;
+  });
+
+  renderSocialMessageTable(filtered);
+}
+
+function refreshChannelFilterOptions(messages){
+  const select = document.getElementById('messageFilterChannel');
+  if(!select) return;
+  const current = select.value || 'all';
+
+  const set = new Set((messages || []).map(item => (item.platform || '').toLowerCase()).filter(Boolean));
+  const channels = Array.from(set).sort();
+
+  let html = '<option value="all">All Channels</option>';
+  channels.forEach(ch => {
+    html += `<option value="${ch}">${ch.charAt(0).toUpperCase()+ch.slice(1)}</option>`;
+  });
+  select.innerHTML = html;
+
+  const exists = channels.includes((current || '').toLowerCase());
+  select.value = exists ? current.toLowerCase() : 'all';
+}
+
+function escapeHtml(text){
+  return (text || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function loadRecentSocialMessages(){
+  fetch(`${API_URL}/social/messages/${technician_id}?limit=20`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(res => res.json())
+  .then(data => {
+    socialMessageCache = data.messages || [];
+    refreshChannelFilterOptions(socialMessageCache);
+    applyInboxFilters();
+    document.getElementById('socialRefreshStatus').innerText = `Last refresh: ${new Date().toLocaleTimeString()}`;
+  })
+  .catch(() => {
+    document.getElementById('socialInboxTable').innerHTML = '<div style="padding:10px; color:#e74c3c;">Could not load messages right now.</div>';
+    document.getElementById('socialRefreshStatus').innerText = 'Refresh failed';
+  });
+}
+
+function refreshSocialHubNow(){
+  loadSocialAnalytics();
+  loadRecentSocialMessages();
+  loadActiveHandoffs();
+}
+
+function startSocialAutoRefresh(){
+  if(socialAutoRefreshTimer){
+    clearInterval(socialAutoRefreshTimer);
+    socialAutoRefreshTimer = null;
+  }
+
+  const enabled = document.getElementById('socialAutoRefresh')?.checked;
+  if(!enabled) return;
+
+  socialAutoRefreshTimer = setInterval(() => {
+    const socialSectionActive = document.getElementById('social')?.classList.contains('active');
+    if(socialSectionActive){
+      refreshSocialHubNow();
+    }
+  }, 15000);
+}
+
+function initSocialInboxControls(){
+  ['messageFilterChannel','messageFilterDirection','messageFilterStatus'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('change', applyInboxFilters);
+  });
+  const searchInput = document.getElementById('messageSearch');
+  if(searchInput){
+    searchInput.addEventListener('input', applyInboxFilters);
+  }
+  const autoRefreshToggle = document.getElementById('socialAutoRefresh');
+  if(autoRefreshToggle){
+    autoRefreshToggle.addEventListener('change', startSocialAutoRefresh);
+  }
+  startSocialAutoRefresh();
+}
+
+function renderActiveHandoffs(items){
+  const target = document.getElementById('activeHandoffs');
+  if(!items || !items.length){
+    target.innerHTML = 'No active handoffs.';
+    return;
+  }
+
+  let html = '<div style="display:flex; flex-direction:column; gap:8px;">';
+  items.forEach(item => {
+    html += `<div style="padding:8px; background:#fff; border:1px solid #eee; border-radius:8px;">`
+      + `<div><strong>Session:</strong> ${escapeHtml(item.session_id || '-')}</div>`
+      + `<div><strong>Channel:</strong> ${escapeHtml(item.platform || '-')} | <strong>User:</strong> ${escapeHtml(item.account_id || '-')}</div>`
+      + `<div><strong>Note:</strong> ${escapeHtml(item.note || 'Handled by human')}</div>`
+      + `</div>`;
+  });
+  html += '</div>';
+  target.innerHTML = html;
+}
+
+function loadActiveHandoffs(){
+  fetch(`${API_URL}/social/handoffs/${technician_id}`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const items = data.handoffs || [];
+    activeHandoffSessionSet = new Set(items.map(item => item.session_id).filter(Boolean));
+    renderActiveHandoffs(items);
+    applyInboxFilters();
+  })
+  .catch(() => {
+    document.getElementById('activeHandoffs').innerHTML = 'Could not load handoffs.';
+  });
+}
+
+function quickPauseHandoff(sessionId){
+  document.getElementById('handoffSessionId').value = sessionId;
+  pauseHandoff();
+}
+
+function quickResumeHandoff(sessionId){
+  document.getElementById('handoffSessionId').value = sessionId;
+  resumeHandoff();
+}
+
+function quickPauseByAccount(platform, accountId){
+  const status = document.getElementById('handoffStatus');
+  status.innerText = 'Pausing bot...';
+  status.style.color = '#666';
+
+  fetch(`${API_URL}/social/handoff/pause`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+    body:JSON.stringify({
+      technician_id: parseInt(technician_id),
+      platform,
+      account_id: accountId,
+      note: 'Paused from inbox action'
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      document.getElementById('handoffSessionId').value = data.session_id || '';
+      status.innerText = '✅ Bot paused for this user.';
+      status.style.color = '#27ae60';
+      loadActiveHandoffs();
+      loadRecentSocialMessages();
+    } else {
+      status.innerText = `❌ ${data.detail || 'Could not pause this user.'}`;
+      status.style.color = '#e74c3c';
+    }
+  })
+  .catch((e) => {
+    status.innerText = `❌ ${e?.message || 'Could not pause this user.'}`;
+    status.style.color = '#e74c3c';
+  });
+}
+
+function closeSessionDrawer(){
+  selectedSessionForDrawer = null;
+  document.getElementById('sessionDrawer').style.display = 'none';
+  document.getElementById('manualReplyStatus').innerText = '';
+}
+
+function openSessionDrawer(sessionId){
+  selectedSessionForDrawer = sessionId;
+  const drawer = document.getElementById('sessionDrawer');
+  const meta = document.getElementById('sessionDrawerMeta');
+  const timeline = document.getElementById('sessionDrawerTimeline');
+
+  drawer.style.display = 'block';
+  meta.innerText = `Session: ${sessionId}`;
+  timeline.innerHTML = 'Loading conversation...';
+
+  fetch(`${API_URL}/social/session/${technician_id}/${sessionId}/messages?limit=80`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const session = data.session || {};
+    const rows = data.messages || [];
+    meta.innerText = `Session: ${session.session_id || sessionId} | ${session.platform || '-'} | user ${session.account_id || '-'} | ${session.handoff_paused ? 'Paused' : 'Active'}`;
+
+    if(!rows.length){
+      timeline.innerHTML = 'No session messages yet.';
+      return;
+    }
+
+    let html = '<div style="display:flex; flex-direction:column; gap:8px;">';
+    rows.forEach(item => {
+      const inbound = (item.direction || '').toLowerCase() === 'incoming';
+      html += `<div style="padding:8px; border-radius:8px; background:${inbound ? '#eef7ff' : '#f4fff1'};">`
+        + `<div style="font-size:11px; color:#666; margin-bottom:4px;">${escapeHtml(item.created_at || '-')} • ${escapeHtml(item.direction || '-')} • ${escapeHtml(item.status || '-')}</div>`
+        + `<div>${escapeHtml(item.message_content || '')}</div>`
+        + `</div>`;
+    });
+    html += '</div>';
+    timeline.innerHTML = html;
+  })
+  .catch(() => {
+    timeline.innerHTML = 'Failed to load session details.';
+  });
+}
+
+function sendManualReplyFromDrawer(){
+  const status = document.getElementById('manualReplyStatus');
+  const text = (document.getElementById('manualReplyText').value || '').trim();
+  if(!selectedSessionForDrawer){
+    status.innerText = 'Select a session first.';
+    status.style.color = '#e74c3c';
+    return;
+  }
+  if(!text){
+    status.innerText = 'Type a reply first.';
+    status.style.color = '#e74c3c';
+    return;
+  }
+
+  status.innerText = 'Sending...';
+  status.style.color = '#666';
+
+  fetch(`${API_URL}/social/session/${technician_id}/${selectedSessionForDrawer}/messages?limit=1`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const session = data.session || {};
+    return fetch(`${API_URL}/social/manual-reply`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({
+        technician_id: parseInt(technician_id),
+        session_id: selectedSessionForDrawer,
+        platform: session.platform,
+        account_id: session.account_id,
+        message: text
+      })
+    });
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      status.innerText = '✅ Manual reply sent';
+      status.style.color = '#27ae60';
+      document.getElementById('manualReplyText').value = '';
+      openSessionDrawer(selectedSessionForDrawer);
+      refreshSocialHubNow();
+    } else {
+      status.innerText = `❌ ${data.detail || 'Send failed'}`;
+      status.style.color = '#e74c3c';
+    }
+  })
+  .catch(() => {
+    status.innerText = '❌ Send failed';
+    status.style.color = '#e74c3c';
+  });
+}
+
+function pauseHandoff(){
+  const sessionId = (document.getElementById('handoffSessionId').value || '').trim();
+  const note = (document.getElementById('handoffNote').value || '').trim();
+  const status = document.getElementById('handoffStatus');
+
+  if(!sessionId){
+    status.innerText = 'Provide a session ID first.';
+    status.style.color = '#e74c3c';
+    return;
+  }
+
+  status.innerText = 'Pausing bot...';
+  status.style.color = '#666';
+
+  fetch(`${API_URL}/social/handoff/pause`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+    body:JSON.stringify({
+      technician_id: parseInt(technician_id),
+      session_id: sessionId,
+      note
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      status.innerText = '✅ Bot paused for this session.';
+      status.style.color = '#27ae60';
+      loadActiveHandoffs();
+      loadRecentSocialMessages();
+    } else {
+      status.innerText = `❌ ${data.detail || 'Could not pause session.'}`;
+      status.style.color = '#e74c3c';
+    }
+  })
+  .catch((e) => {
+    status.innerText = `❌ ${e?.message || 'Could not pause session.'}`;
+    status.style.color = '#e74c3c';
+  });
+}
+
+function resumeHandoff(){
+  const sessionId = (document.getElementById('handoffSessionId').value || '').trim();
+  const status = document.getElementById('handoffStatus');
+
+  if(!sessionId){
+    status.innerText = 'Provide a session ID first.';
+    status.style.color = '#e74c3c';
+    return;
+  }
+
+  status.innerText = 'Resuming bot...';
+  status.style.color = '#666';
+
+  fetch(`${API_URL}/social/handoff/resume`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+    body:JSON.stringify({
+      technician_id: parseInt(technician_id),
+      session_id: sessionId
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      status.innerText = '✅ Bot resumed for this session.';
+      status.style.color = '#27ae60';
+      loadActiveHandoffs();
+      loadRecentSocialMessages();
+    } else {
+      status.innerText = `❌ ${data.detail || 'Could not resume session.'}`;
+      status.style.color = '#e74c3c';
+    }
+  })
+  .catch((e) => {
+    status.innerText = `❌ ${e?.message || 'Could not resume session.'}`;
+    status.style.color = '#e74c3c';
+  });
+}
+
+// Welcome back banner functions
+function showWelcomeBackBanner(platform, accountName) {
+  const banner = document.getElementById('welcomeBackBanner');
+  const title = document.getElementById('welcomeBackTitle');
+  const message = document.getElementById('welcomeBackMessage');
+  const details = document.getElementById('connectedAccountDetails');
+  
+  const platformIcons = {
+    instagram: '📸', facebook: '👍', whatsapp: '💬', tiktok: '🎵', telegram: '✈️'
+  };
+  const icon = platformIcons[platform] || '📱';
+  
+  title.innerHTML = `🎉 ${platform.charAt(0).toUpperCase() + platform.slice(1)} Connected!`;
+  message.innerHTML = `Your account <strong>${formatAccountTag(platform, accountName)}</strong> is now connected. AIVA can start replying to incoming client messages.`;
+  
+  details.innerHTML = `
+    <div style="flex:1; min-width:200px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:30px;">${icon}</span>
+        <div>
+          <div style="font-weight:bold;">${platform}</div>
+          <div style="font-size:13px; opacity:0.8;">${formatAccountTag(platform, accountName)}</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:2; min-width:250px;">
+      <div style="display:flex; gap:15px; flex-wrap:wrap;">
+        <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; flex:1;">
+          <div style="font-size:12px; opacity:0.8;">AI Status</div>
+          <div style="font-weight:bold;">✅ Active</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; flex:1;">
+          <div style="font-size:12px; opacity:0.8;">Auto-Reply</div>
+          <div style="font-weight:bold;">⚡ Enabled</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  banner.style.display = 'block';
+  
+  // Auto-hide after 10 seconds
+  setTimeout(() => {
+    if (banner.style.display === 'block') {
+      banner.style.opacity = '0';
+      banner.style.transition = 'opacity 0.5s';
+      setTimeout(() => {
+        banner.style.display = 'none';
+        banner.style.opacity = '1';
+      }, 500);
+    }
+  }, 10000);
+}
+
+function dismissWelcomeBanner() {
+  const banner = document.getElementById('welcomeBackBanner');
+  banner.style.opacity = '0';
+  banner.style.transition = 'opacity 0.3s';
+  setTimeout(() => {
+    banner.style.display = 'none';
+    banner.style.opacity = '1';
+  }, 300);
+}
+
+// Check for recent connection on page load
+(function checkRecentConnection() {
+  const justConnected = localStorage.getItem('just_connected');
+  const connectedPlatform = localStorage.getItem('connected_platform');
+  const connectedAccount = localStorage.getItem('connected_account');
+  
+  if (justConnected === 'true' && connectedPlatform && connectedAccount) {
+    showWelcomeBackBanner(connectedPlatform, connectedAccount);
+    // Clear after showing
+    localStorage.removeItem('just_connected');
+    localStorage.removeItem('connected_platform');
+    localStorage.removeItem('connected_account');
+  }
+})();
+
+// Connect Social - ONE TIME ACTION, NO POLLING
+async function connectSocial(platform){
+  if(platform === 'whatsapp'){
+    showWhatsAppQR();
+    return;
+  }
+  if(platform === 'telegram'){
+    showNotification('Telegram: Create bot via @BotFather first', 'info');
+    window.open('https://t.me/botfather', '_blank');
+    return;
+  }
+  
+  const state = Math.random().toString(36).substring(2);
+  localStorage.setItem('oauth_state', state);
+  localStorage.setItem('pending_platform', platform);
+  
+  try {
+    const res = await fetch(`${API_URL}/social/connect/${platform}`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({
+        technician_id:parseInt(technician_id),
+        state: state,
+        redirect_uri: window.location.origin + window.location.pathname
+      })
+    });
+    const data = await res.json();
+    if(data.auth_url) window.location.href = data.auth_url;
+    else showNotification('Connection failed', 'error');
+  } catch(e){ showNotification('Connection error', 'error'); }
+}
+
+// WhatsApp QR - ONE TIME, NO POLLING
+function showWhatsAppQR(){
+  if(whatsappModal) return;
+  
+  whatsappModal = document.createElement('div');
+  whatsappModal.className = 'qr-modal';
+  whatsappModal.innerHTML = `
+    <div class="qr-content">
+      <h3>📱 Connect WhatsApp</h3>
+      <div class="qr-code" id="whatsappQRCode">Loading QR...</div>
+      <p class="qr-help">Scan with WhatsApp Business app</p>
+      <button class="action-btn" onclick="closeQRModal()" style="background:#e74c3c;">Close</button>
+    </div>
+  `;
+  document.body.appendChild(whatsappModal);
+  
+  fetch(`${API_URL}/whatsapp/qr`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+    body:JSON.stringify({ technician_id: parseInt(technician_id) })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.qr_code){
+      document.getElementById('whatsappQRCode').innerHTML = `<img src="${data.qr_code}" style="width:200px;">`;
+    }
+  })
+  .catch(() => {
+    document.getElementById('whatsappQRCode').innerHTML = 'Failed to load QR';
+  });
+}
+
+function closeQRModal(){
+  if(whatsappModal){
+    whatsappModal.remove();
+    whatsappModal = null;
+  }
+}
+
+// Handle OAuth callback - ONE TIME CHECK
+(function checkOAuth(){
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const state = params.get('state');
+  const stored = localStorage.getItem('oauth_state');
+  const platform = localStorage.getItem('pending_platform');
+  
+  if(code && state && state === stored && platform){
+    // Clear URL immediately
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Exchange code
+    fetch(`${API_URL}/social/token`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({
+        platform: platform,
+        code: code,
+        technician_id: parseInt(technician_id),
+        state: stored,
+        redirect_uri: window.location.origin + window.location.pathname
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.success){
+        // Update UI with connected account
+        const statusEl = document.getElementById(platform+'Status');
+        const infoEl = document.getElementById(platform+'ConnectedInfo');
+        const nameEl = document.getElementById({
+          'instagram':'instagramUsername',
+          'facebook':'facebookPageName',
+          'tiktok':'tiktokUsername',
+          'telegram':'telegramUsername'
+        }[platform] || platform+'Username');
+        
+        if(statusEl) statusEl.innerHTML = '<span class="status-dot connected"></span> Connected';
+        if(infoEl) infoEl.style.display = 'block';
+        if(nameEl && data.account_name) nameEl.innerText = data.account_name;
+        
+        // Store connection info for welcome banner
+        localStorage.setItem('just_connected', 'true');
+        localStorage.setItem('connected_platform', platform);
+        localStorage.setItem('connected_account', data.account_name);
+        
+        // Show banner immediately
+        showWelcomeBackBanner(platform, data.account_name);
+        
+        showNotification(`✅ ${platform} connected!`);
+        loadConnectedSummary();
+      }
+    })
+    .catch(() => showNotification('Connection failed', 'error'))
+    .finally(() => {
+      localStorage.removeItem('oauth_state');
+      localStorage.removeItem('pending_platform');
+    });
+  }
+})();
+
+// Disconnect social
+async function disconnectSocial(platform){
+  if(!confirm(`Disconnect ${platform}?`)) return;
+  
+  try {
+    const res = await fetch(`${API_URL}/social/disconnect`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({ technician_id: parseInt(technician_id), platform })
+    });
+    const data = await res.json();
+    
+    if(data.success){
+      // Reset UI
+      resetPlatformCard(platform);
+      showNotification(`${platform} disconnected`);
+      loadConnectedSummary();
+    }
+  } catch(e){ showNotification('Disconnect failed', 'error'); }
+}
+
+// Load connected accounts summary
+async function loadConnectedSummary(){
+  try {
+    const res = await fetch(`${API_URL}/social/accounts/${technician_id}`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    const accounts = data.accounts || [];
+    connectedAccountsCache = accounts;
+
+    ['instagram','whatsapp','facebook','tiktok','telegram'].forEach(resetPlatformCard);
+    accounts.forEach(acc => applyAccountToPlatformCard(acc.platform, acc.account_name));
+    
+    const summary = document.getElementById('connectedAccountsSummary');
+    if(accounts.length === 0){
+      summary.innerHTML = 'No accounts connected';
+      updateSetupChecklist(accounts);
+      loadSocialAnalytics();
+      loadRecentSocialMessages();
+      return;
+    }
+    
+    let html = '<div style="display:flex; flex-direction:column; gap:8px;">';
+    accounts.forEach(acc => {
+      const icons = {instagram:'📸', whatsapp:'💬', facebook:'👍', tiktok:'🎵', telegram:'✈️'};
+      html += `<div style="padding:8px; background:#f5f5f5; border-radius:6px;">
+        <span style="margin-right:8px;">${icons[acc.platform] || '📱'}</span>
+        <strong>${acc.platform}</strong> - ${formatAccountTag(acc.platform, acc.account_name)}
+      </div>`;
+    });
+    html += '</div>';
+    summary.innerHTML = html;
+    updateSetupChecklist(accounts);
+
+    const testPlatform = document.getElementById('socialTestPlatform');
+    if(testPlatform){
+      const current = testPlatform.value;
+      const connectedPlatforms = accounts.map(acc => acc.platform);
+      const mergedPlatforms = Array.from(new Set([...baseSocialTestPlatforms, ...connectedPlatforms]));
+      testPlatform.innerHTML = mergedPlatforms
+        .map(platform => `<option value="${platform}">${platform.charAt(0).toUpperCase()+platform.slice(1)}</option>`)
+        .join('');
+      const stillExists = mergedPlatforms.includes(current);
+      testPlatform.value = stillExists ? current : mergedPlatforms[0];
+    }
+    loadSocialAnalytics();
+    loadRecentSocialMessages();
+  } catch(e){ console.error('loadConnectedSummary error:', e); }
+}
+if(sessionReady){
+  loadConnectedSummary();
+  loadSocialAutomation();
+  loadSocialAnalytics();
+  loadRevenueDashboard();
+  loadDashboardNotifications();
+  loadRecentSocialMessages();
+  loadActiveHandoffs();
+  initSocialInboxControls();
+  dashboardNotificationTimer = setInterval(loadDashboardNotifications, 15000);
+}
+
+window.addEventListener('beforeunload', () => {
+  if(socialAutoRefreshTimer) clearInterval(socialAutoRefreshTimer);
+  if(dashboardNotificationTimer) clearInterval(dashboardNotificationTimer);
+});
+
+async function runSocialTest(event){
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const platform = document.getElementById('socialTestPlatform').value;
+  const message = (document.getElementById('socialTestMessage').value || '').trim();
+  const output = document.getElementById('socialTestOutput');
+
+  if(!message){
+    output.innerText = 'Please type a message first.';
+    return;
+  }
+
+  output.innerText = 'Running test...';
+  try {
+    const res = await fetch(`${API_URL}/chat/receive`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({
+        technician_id: parseInt(technician_id),
+        message,
+        platform,
+        account_id: `test_${platform}_user`
+      })
+    });
+    const data = await res.json();
+    if(!res.ok){
+      if(res.status === 403){
+        handleLockedFeature(data.detail || 'Your free trial has ended. Upgrade to continue.');
+      }
+      output.innerText = data.detail || 'Test failed. Check API server and try again.';
+      return;
+    }
+    output.innerHTML = `
+      <div style="margin-bottom:8px;"><strong>Client:</strong> ${message}</div>
+      <div><strong>AIVA Reply:</strong> ${data.reply || 'No reply returned'}</div>
+    `;
+    localStorage.setItem('social_test_done', 'true');
+    updateSetupChecklist(connectedAccountsCache);
+    loadSocialAnalytics();
+    loadRecentSocialMessages();
+  } catch(e){
+    output.innerText = 'Test failed. Check API server and try again.';
+  }
+}
+
+(function wireSocialTestActions(){
+  const runBtn = document.getElementById('socialTestRunBtn');
+  if(runBtn){
+    runBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      runSocialTest(event);
+    });
+  }
+
+  const testInput = document.getElementById('socialTestMessage');
+  if(testInput){
+    testInput.addEventListener('keydown', (event) => {
+      if(event.key === 'Enter'){
+        event.preventDefault();
+        event.stopPropagation();
+        runSocialTest(event);
+      }
+    });
+  }
+})();
+
+// ========== CHAT SETTINGS - NAILS & LASHES PREVIEW ==========
+
+// Main preview function - CALL THIS FROM BUTTON
+window.previewChatTone = function(event) {
+  // Prevent any default behavior
+  if (event) {
+    event.preventDefault();
+  }
+  
+  console.log('Preview button clicked!'); // Debug: Check if function runs
+  
+  const tone = document.getElementById('chatTone').value;
+  const customPrompt = document.getElementById('customPrompt').value;
+  const previewDiv = document.getElementById('chatPreview');
+  
+  // Show loading state
+  previewDiv.innerHTML = '<div style="text-align:center; padding:30px; color:#999;">⏳ Loading your services...</div>';
+  
+  // Get services from the services list in dashboard
+  setTimeout(() => {
+    const services = getServicesFromDashboard();
+    displayNailsLashesPreview(services, tone, customPrompt, previewDiv);
+  }, 100);
+  
+  return false;
+};
+
+// Helper function to get services from dashboard
+function getServicesFromDashboard() {
+  const serviceElements = document.querySelectorAll('#servicesList p');
+  let services = [];
+  
+  if (serviceElements && serviceElements.length > 0) {
+    serviceElements.forEach(el => {
+      const text = el.innerText || el.textContent;
+      const match = text.match(/(.+?)\s*—\s*₦(\d+)/);
+      if (match) {
+        services.push({
+          name: match[1].trim(),
+          price: match[2]
+        });
+      }
+    });
+  }
+  
+  // If no services found, use default nail/lash services
+  if (services.length === 0) {
+    services = [
+      { name: "Classic Nails", price: "5000" },
+      { name: "Gel Nails", price: "8000" },
+      { name: "Acrylic Nails", price: "10000" },
+      { name: "Nail Art (per nail)", price: "500" },
+      { name: "Lash Extensions", price: "15000" },
+      { name: "Lash Lift", price: "8000" },
+      { name: "Lash Tint", price: "4000" },
+      { name: "Nail Removal", price: "3000" }
+    ];
+  }
+  
+  return services;
+}
+
+// Display nails & lashes preview
+function displayNailsLashesPreview(services, tone, customPrompt, previewDiv) {
+  // Create service list text
+  const serviceListText = services.map(s => `• ${s.name} — ₦${parseInt(s.price).toLocaleString()}`).join('\n');
+  
+  // Client message about nails and lashes
+  const clientMessage = "Hi! I'm getting ready for an event this weekend and I'd love to get my nails and lashes done. What services do you offer and how much do they cost? I'd like to book both if possible.";
+  
+  // Generate AI response based on tone
+  let aiResponse = '';
+  
+  if (customPrompt && customPrompt.trim() !== '') {
+    aiResponse = `✨ Using your custom prompt: "${customPrompt.substring(0, 80)}..."\n\nHere are our nail and lash services:\n${serviceListText}\n\nFor this weekend, I have Saturday at 11am and 2pm, Sunday at 1pm and 3pm available. Nails take about 1 hour, lashes about 1.5 hours. I can schedule you for both back-to-back. Which time works best?`;
+  } else {
+    switch(tone) {
+      case 'professional':
+        aiResponse = `Good day! Thank you for your interest in our salon. Here are our nail and lash services:\n\n${serviceListText}\n\nWe have availability this weekend on Saturday at 11:00 AM and 2:00 PM, and Sunday at 1:00 PM and 3:00 PM. Please note that a full set of lashes takes approximately 1.5 hours, and nails take 1 hour. Would you like to book both services together?`;
+        break;
+        
+      case 'cozy':
+        aiResponse = `Hey lovely! 💕 So excited for your event this weekend! Here's what we have for nails and lashes:\n\n${serviceListText}\n\nThis weekend we have cozy spots open Saturday at 11am or 2pm, Sunday at 1pm or 3pm. Both services together would take about 2.5 hours - perfect for some pampering time! Which feels right for you? 🏠✨`;
+        break;
+        
+      case 'sweet':
+        aiResponse = `Aww thanks for choosing us for your special event! 🌸 You're going to look absolutely beautiful! Here are our services:\n\n${serviceListText}\n\nThis weekend we have Saturday at 11:00 or 14:00, and Sunday at 13:00 or 15:00. Nails take 1 hour, lashes 1.5 hours. I can schedule you for both back-to-back. Which time makes your heart happy? 💖`;
+        break;
+        
+      case 'friendly':
+        aiResponse = `Hi! 😊 Thanks for reaching out! An event this weekend sounds exciting! Here's what we offer:\n\n${serviceListText}\n\nThis weekend I've got Saturday 11am & 2pm, Sunday 1pm & 3pm available. Nails take about 1 hour, lashes about 1.5 hours. Want to book both? Let me know what works for you!`;
+        break;
+        
+      default:
+        aiResponse = `Hello! Here are our nail and lash services for your event:\n\n${serviceListText}\n\nWe have availability this weekend on Saturday (11am, 2pm) and Sunday (1pm, 3pm). Both services together take about 2.5 hours. Which time would you like to book?`;
+    }
+  }
+  
+  // Format the conversation with beautiful chat bubbles
+  previewDiv.innerHTML = `
+    <div style="margin-bottom:20px; display:flex; flex-direction:column; align-items:flex-end;">
+      <div style="background:#e3f2fd; padding:15px 20px; border-radius:20px 20px 5px 20px; max-width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+        <div style="font-size:12px; color:#1976d2; margin-bottom:5px; font-weight:bold;">👤 CLIENT</div>
+        <div style="color:#333; line-height:1.5;">"${clientMessage}"</div>
+      </div>
+      <span style="font-size:11px; color:#999; margin-top:5px;">just now</span>
+    </div>
+    
+    <div style="margin-bottom:10px; display:flex; flex-direction:column; align-items:flex-start;">
+      <div style="background:#f3e5f5; padding:15px 20px; border-radius:20px 20px 20px 5px; max-width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+        <div style="font-size:12px; color:#7b1fa2; margin-bottom:5px; font-weight:bold;">🤖 AI ASSISTANT <span style="color:#999; font-weight:normal; margin-left:8px;">(${tone} style)</span></div>
+        <div style="color:#333; line-height:1.6; white-space:pre-line;">${aiResponse}</div>
+      </div>
+      <span style="font-size:11px; color:#999; margin-top:5px;">just now</span>
+    </div>
+    
+    <div style="margin-top:20px; padding:12px; background:#fff3e0; border-radius:8px; border-left:4px solid #ff9800; font-size:13px; color:#e67e22;">
+      <span style="font-weight:bold;">💅 USING YOUR SERVICES:</span> ${services.length} services loaded ${services.length > 0 && document.querySelectorAll('#servicesList p').length > 0 ? 'from your Services dashboard' : '(add services in the Services tab to customize)'}
+    </div>
+  `;
+}
+
+// Save chat settings
+window.saveChatSettings = function(event) {
+  if (event) {
+    event.preventDefault();
+  }
+  
+  const tone = document.getElementById('chatTone').value;
+  const customPrompt = document.getElementById('customPrompt').value;
+  const statusEl = document.getElementById('socialConnectStatus');
+  
+  statusEl.innerHTML = '⏳ Saving...';
+  statusEl.style.color = '#666';
+  
+  fetch(API_URL + '/chat-settings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify({
+      technician_id: parseInt(technician_id),
+      tone: tone,
+      custom_prompt: customPrompt || null
+    })
+  })
+  .then(async res => ({ ok: res.ok, status: res.status, data: await res.json() }))
+  .then(({ ok, status, data }) => {
+    if(!ok){
+      if(status === 403){
+        handleLockedFeature(data.detail || 'Your free trial has ended. Upgrade to continue.');
+      }
+      statusEl.innerHTML = '❌ Save failed';
+      statusEl.style.color = '#e74c3c';
+      return;
+    }
+    if (data.success) {
+      statusEl.innerHTML = '✅ Chat style saved!';
+      statusEl.style.color = '#27ae60';
+      // Show preview after save
+      setTimeout(() => window.previewChatTone(), 500);
+    } else {
+      statusEl.innerHTML = '❌ Save failed';
+      statusEl.style.color = '#e74c3c';
+    }
+  })
+  .catch(() => {
+    statusEl.innerHTML = '❌ Save failed';
+    statusEl.style.color = '#e74c3c';
+  });
+  
+  return false;
+};
+
+// Load saved settings on page load
+(function loadChatSettingsOnStart() {
+  if(!sessionReady) return;
+  setTimeout(() => {
+    fetch(API_URL + '/chat-settings/' + technician_id, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(async res => ({ ok: res.ok, status: res.status, data: await res.json() }))
+    .then(({ ok, status, data }) => {
+      if(!ok){
+        if(status === 403){
+          handleLockedFeature(data.detail || 'Your free trial has ended. Upgrade to continue.');
+        }
+        return;
+      }
+      if (data.tone) document.getElementById('chatTone').value = data.tone;
+      if (data.custom_prompt) document.getElementById('customPrompt').value = data.custom_prompt;
+    })
+    .catch(() => {});
+  }, 500);
+})();
+
+// Proofs
+async function uploadProof(){
+  const bookingId = document.getElementById('proofBookingId').value;
+  const file = document.getElementById('proofFile').files[0];
+  if(!bookingId || !file) { showNotification('Provide booking ID and file', 'error'); return; }
+  
+  const fd = new FormData();
+  fd.append('file', file);
+  
+  try {
+    const res = await fetch(API_URL + '/payments/proof?booking_id='+bookingId+'&technician_id='+technician_id, {
+      method:'POST', headers:{'Authorization':'Bearer '+token}, body:fd
+    });
+    const data = await res.json();
+    if(data.success){
+      showNotification('Proof uploaded');
+      document.getElementById('proofBookingId').value = '';
+      document.getElementById('proofFile').value = '';
+      loadProofs();
+    }
+  } catch(e){ showNotification('Upload failed', 'error'); }
+}
+
+async function loadProofs(){
+  try {
+    const res = await fetch(API_URL+'/payments/proofs/'+technician_id, {
+      headers:{'Authorization':'Bearer '+token}
+    });
+    const data = await res.json();
+    const proofs = data.proofs || [];
+    let html = '';
+    proofs.forEach(p => {
+      html += `<div style="padding:8px; border-bottom:1px solid #eee;">Proof #${p.id} - ${p.status}</div>`;
+    });
+    document.getElementById('paymentProofsList').innerHTML = html || '<p>No proofs</p>';
+  } catch(e){}
+}
+if(sessionReady) loadProofs();
+
+// LOGOUT
+function logout(){
+  localStorage.clear();
+  window.location.href = 'login.html';
+}
+</script>
 </body>
 </html>

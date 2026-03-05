@@ -7,34 +7,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>AIVA Lash & Nail Booking</h1>
-        <form id="bookingForm">
-            <label>Technician Email</label>
-            <input type="email" id="technician_email" placeholder="Enter technician email" required>
+    <div class="booking-container">
+        <div class="booking-left">
+            <img src="images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" class="app-logo" alt="AIVA Logo">
+            <p>Book beauty appointments quickly with your salon details, preferred service, and client contact information.</p>
+        </div>
 
-            <label>Client Name</label>
-            <input type="text" id="client_name" placeholder="Enter client name" required>
+        <div class="booking-right">
+            <h1>AIVA Lash & Nail Booking</h1>
+            <p class="booking-subtext">Create an appointment in seconds</p>
 
-            <label>Service</label>
-            <input type="text" id="service" placeholder="E.g. Lash Extension" required>
+            <form id="bookingForm">
+                <label>Technician Email</label>
+                <input type="email" id="technician_email" placeholder="Enter technician email" required>
 
-            <label>Date</label>
-            <input type="date" id="date" required>
+                <label>Client Name</label>
+                <input type="text" id="client_name" placeholder="Enter client name" required>
 
-            <label>Time</label>
-            <input type="time" id="time" required>
+                <label>Service</label>
+                <input type="text" id="service" placeholder="E.g. Lash Extension" required>
 
-            <label>Client Email</label>
-            <input type="email" id="email" placeholder="Enter client email" required>
+                <label>Date</label>
+                <input type="date" id="date" required>
 
-            <label>Client Phone</label>
-            <input type="tel" id="phone" placeholder="Enter client phone number" required>
+                <label>Time</label>
+                <input type="time" id="time" required>
 
-            <button type="submit">Book Appointment</button>
-        </form>
+                <label>Client Email</label>
+                <input type="email" id="email" placeholder="Enter client email" required>
 
-        <p id="responseMessage"></p>
+                <label>Client Phone</label>
+                <input type="tel" id="phone" placeholder="Enter client phone number" required>
+
+                <button type="submit">Book Appointment</button>
+            </form>
+
+            <p id="responseMessage"></p>
+        </div>
     </div>
 
     <script src="script.js"></script>

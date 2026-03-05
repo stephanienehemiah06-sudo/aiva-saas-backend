@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AIVA Beauty – Create Account</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="signup-container">
+
+  <!-- LEFT PANEL -->
+  <div class="signup-left">
+<img src="images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" class="app-logo" alt="AIVA Logo">
+    <p class="tagline">Build your beauty business professionally</p>
+
+    <ul>
+      <li>✨ Appointments</li>
+      <li>✨ Services & Pricing</li>
+      <li>✨ Payments</li>
+      <li>✨ AI Assistant</li>
+    </ul>
+
+    <p class="note">For beauty professionals only</p>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="signup-right">
+    <h2>Create Account</h2>
+    <p class="subtext">Start your beauty journey</p>
+
+    <form id="signupForm">
+      <input type="text" id="full_name" placeholder="Full Name" required>
+      <input type="text" id="business_name" placeholder="Business Name" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+      <input type="password" id="password" placeholder="Password" required>
+
+      <button type="submit">Create Account</button>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </p>
+  </div>
+
+</div>
+
+<script>
+const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000").replace(/\/+$/, "");
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("signupForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      full_name: document.getElementById("full_name").value.trim(),
+      business_name: document.getElementById("business_name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value
+    };
+
+    try {
+      const res = await fetch(`${API_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      let data = {};
+      try { data = await res.json(); } catch(_) { data = {}; }
+
+      if (!res.ok) {
+        alert(data.detail || "Signup failed");
+        return;
+      }
+
+      alert("Signed up successfully. Redirecting to login...");
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 400);
+
+    } catch (error) {
+      console.error(error);
+      alert(`Backend not reachable. Please make sure API server is running on ${API_URL}`);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
