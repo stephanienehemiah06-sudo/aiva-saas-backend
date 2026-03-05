@@ -15,6 +15,7 @@ import schemas
 from database import engine, get_db
 from services.password_service import hash_password, verify_password
 from auth import create_access_token, get_technician_from_token
+from webhook import router as webhook_router
 
 # =======================
 # CREATE DATABASE
@@ -30,6 +31,8 @@ app = FastAPI(
     title="AIVA SaaS Agent Backend 🪄✨",
     version="1.1.0"
 )
+
+app.include_router(webhook_router)
 
 # =======================
 # CORS
