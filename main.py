@@ -351,6 +351,31 @@ Email: support@aivabeauty.app
 """
     }
 
+from fastapi.responses import HTMLResponse
+
+@app.get("/", response_class=HTMLResponse)
+def home():
+    return """
+    <html>
+        <head>
+            <title>AIVA AI Agent</title>
+        </head>
+        <body style="font-family: Arial; text-align:center; margin-top:100px;">
+            <h1>✨ AIVA AI Booking Assistant</h1>
+            <p>Instagram AI Agent for Lash & Nail Technicians</p>
+
+            <h3>Status</h3>
+            <p>Backend Server Running ✅</p>
+
+            <h3>Available Routes</h3>
+            <p>/webhook</p>
+            <p>/privacy</p>
+
+            <p style="margin-top:40px;">Built by Stephanie</p>
+        </body>
+    </html>
+    """
+
 
 # =======================
 # ROOT
