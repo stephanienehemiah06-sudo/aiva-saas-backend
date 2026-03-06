@@ -1,5 +1,6 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
+from fastapi import HTTPException
 import jwt
 
 # ---------------- CONFIG ----------------
@@ -25,3 +26,16 @@ def create_access_token(email: str) -> str:
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     return token
+
+    #-----------------------Technician-----------------------
+    def get_technician_from_token(token: str):
+        try: 
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            email = payload.get("sub")
+            if email is None:
+                raise HTTPException(status_code=401, detail="Invalid token")
+            return email
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(status_code=401, detail="Token has expired")
+        except jwt.InvalidTokenError:
+            raise HTTPException(status_code=401, detail="Invalid token")
