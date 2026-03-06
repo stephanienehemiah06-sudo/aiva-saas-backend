@@ -1,6 +1,5 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional, List, Any
-from pydanti import BaseModel
 
 
 class LoginSchema(BaseModel):
