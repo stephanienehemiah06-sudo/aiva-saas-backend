@@ -1,4 +1,4 @@
-const API = "http://127.0.0.1:8000";
+﻿const API = "http://127.0.0.1:8000";
 
 async function signup() {
   const payload = {
@@ -17,7 +17,7 @@ async function signup() {
   const data = await res.json();
 
   if (res.ok) {
-    alert("Account created successfully 🎉");
+    alert("Account created successfully ≡ƒÄë");
     window.location.href = "login.html";
   } else {
     alert(data.detail);
