@@ -1,4 +1,4 @@
-﻿const API = "http://127.0.0.1:8000";
+﻿const API = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
 
 async function signup() {
   const payload = {
@@ -8,7 +8,7 @@ async function signup() {
     password: document.getElementById("password").value
   };
 
-  const res = await fetch(`${API}/api/signup`, {
+  const res = await fetch(`${API}/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -17,8 +17,8 @@ async function signup() {
   const data = await res.json();
 
   if (res.ok) {
-    alert("Account created successfully ≡ƒÄë");
-    window.location.href = "login.html";
+    alert("Account created successfully");
+    window.location.href = "/login";
   } else {
     alert(data.detail);
   }

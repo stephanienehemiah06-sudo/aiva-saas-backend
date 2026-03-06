@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>AIVA Beauty – Create Account</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 
   <!-- LEFT PANEL -->
   <div class="signup-left">
-<img src="images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" class="app-logo" alt="AIVA Logo">
+<img src="/static/images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" class="app-logo" alt="AIVA Logo">
     <p class="tagline">Build your beauty business professionally</p>
 
     <ul>
@@ -40,14 +40,14 @@
 
     <p class="login-link">
       Already have an account?
-      <a href="login.html">Login</a>
+      <a href="/login">Login</a>
     </p>
   </div>
 
 </div>
 
 <script>
-const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000").replace(/\/+$/, "");
+const API_URL = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signupForm");
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert("Signed up successfully. Redirecting to login...");
       setTimeout(() => {
-        window.location.href = "login.html";
+        window.location.href = "/login";
       }, 400);
 
     } catch (error) {

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const API_URL = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
   const form = document.getElementById("signupForm");
 
   if (!form) {
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/signup", {
+      const res = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert("Signed up successfully. Redirecting to login...");
       setTimeout(() => {
-        window.location.href = "login.html";
+        window.location.href = "/login";
       }, 400);
 
     } catch (err) {

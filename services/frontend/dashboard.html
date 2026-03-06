@@ -473,7 +473,7 @@ input,select{
 <!-- Dashboard Section -->
 <div class="card section active" id="dashboard">
   <a href="dashboard.html" class="logo-link">
-    <img src="images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" alt="AIVA Logo" class="app-logo">
+    <img src="/static/images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" alt="AIVA Logo" class="app-logo">
   </a>
   <h2 id="businessName"></h2>
   <div style="text-align:right; margin-bottom:10px;">
@@ -1131,7 +1131,7 @@ input,select{
 </div>
 
 <script>
-const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000").replace(/\/+$/, "");
+const API_URL = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
 const stripe = Stripe("pk_test_51RyalQ4uLZc529sjlI1baEBzndCIZtwZFsBJxpH6zOlAAt3RHpTziyeviS8imLaMBHyMdidV6M1djV1XVq281Ic40064fHzKQg");
 
 // AUTH
@@ -1279,7 +1279,7 @@ function show(id){
 
 if(!sessionReady){
   setTimeout(() => showNotification('Session expired. Please log in again.', 'error'), 0);
-  setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+  setTimeout(() => { window.location.href = '/login'; }, 1200);
 }
 
 // SERVICES
@@ -1835,7 +1835,7 @@ function continueSubscriptionCheckout(){
 async function startStripeCheckout(plan, paymentMethod='card'){
   if(!sessionReady){
     showNotification('Please log in again before starting checkout', 'error');
-    setTimeout(() => { window.location.href = 'login.html'; }, 1000);
+    setTimeout(() => { window.location.href = '/login'; }, 1000);
     return;
   }
   try {
@@ -3155,7 +3155,7 @@ if(sessionReady) loadProofs();
 // LOGOUT
 function logout(){
   localStorage.clear();
-  window.location.href = 'login.html';
+  window.location.href = '/login';
 }
 </script>
 </body>

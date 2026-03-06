@@ -1,5 +1,6 @@
 document.getElementById("saveServiceBtn").addEventListener("click", async () => {
     try {
+        const API_URL = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
         //---------------------------
         // Get token
         //---------------------------
@@ -40,7 +41,7 @@ document.getElementById("saveServiceBtn").addEventListener("click", async () => 
         //---------------------------
         // POST Service
         //---------------------------
-        const response = await fetch("http://127.0.0.1:8000/services", {
+        const response = await fetch(`${API_URL}/services`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
