@@ -223,7 +223,10 @@ def get_services(
 # 📅 BOOKINGS
 # =======================
 
-from models import Booking
+try:
+    from models import Booking
+except ImportError:
+    Booking = models.Appointment
 
 @app.post("/check-availability")
 def check_availability(
@@ -279,7 +282,10 @@ def create_booking(
 # 🤖 AI CHAT ENGINE
 # =======================
 
-from models import ConversationState
+try:
+    from models import ConversationState
+except ImportError:
+    ConversationState = models.ChatSession
 
 @app.post("/chat", response_model=schemas.ChatResponse)
 def chat_with_client(

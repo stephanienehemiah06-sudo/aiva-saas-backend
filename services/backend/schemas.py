@@ -7,11 +7,58 @@ class LoginSchema(BaseModel):
     password: str
 
 
+class LoginRequest(LoginSchema):
+    pass
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    technician: Optional[dict] = None
+
+
+class TechnicianResponse(BaseModel):
+    id: int
+    full_name: Optional[str] = None
+    email: str
+    phone: Optional[str] = None
+    business_name: Optional[str] = None
+    country: Optional[str] = None
+    payment_provider: Optional[str] = None
+    deposit_required: Optional[bool] = None
+    deposit_amount: Optional[float] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class ServiceSchema(BaseModel):
     technician_id: int
     name: str
     price: float
     duration: int
+
+
+class ServiceCreate(BaseModel):
+    name: str
+    category: Optional[str] = None
+    description: Optional[str] = None
+    price: float
+    currency: Optional[str] = "GBP"
+    duration_minutes: Optional[int] = None
+
+
+class ServiceResponse(BaseModel):
+    id: int
+    technician_id: int
+    name: str
+    category: Optional[str] = None
+    description: Optional[str] = None
+    price: float
+    currency: Optional[str] = None
+    duration_minutes: Optional[int] = None
+    active: Optional[bool] = None
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AvailabilitySchema(BaseModel):
@@ -67,11 +114,6 @@ class PaymentSettingsCreate(BaseModel):
     account_name: Optional[str] = None
     account_number: Optional[str] = None
     auto_confirm_proofs: Optional[bool] = False
-
-
-    class TokenResponse(BaseModel):
-        access_token: str
-        token_type: str = "bearer"
 
 
 # ==========================
@@ -263,6 +305,16 @@ class ChatMessageResponse(BaseModel):
     payment_instructions: Optional[dict] = None
 
 
+class ChatRequest(BaseModel):
+    chat_id: str
+    message: str
+
+
+class ChatResponse(BaseModel):
+    reply: str
+    action: str
+
+
 class ChatSessionResponse(BaseModel):
     session_id: str
     technician_id: int
@@ -335,6 +387,14 @@ class ClientBookingResponse(BaseModel):
 class ConfirmPaymentRequest(BaseModel):
     booking_id: int
     payment_method: str = "bank"  # bank | stripe | manual
+
+
+class BookingRequest(BaseModel):
+    service_id: int
+    client_name: str
+    client_email: Optional[str] = None
+    appointment_date: str
+    appointment_time: str
 
 
 class BookingResponse(BaseModel):
