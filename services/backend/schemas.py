@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional, List, Any
+from pydanti import BaseModel
 
 
 class LoginSchema(BaseModel):
@@ -67,6 +68,11 @@ class PaymentSettingsCreate(BaseModel):
     account_name: Optional[str] = None
     account_number: Optional[str] = None
     auto_confirm_proofs: Optional[bool] = False
+
+
+    class TokenResponse(BaseModel):
+        access_token: str
+        token_type: str = "bearer"
 
 
 # ==========================
