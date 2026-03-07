@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "**/services/backened": true,
+    "**/__pycache__": true
+  },
+  "search.exclude": {
+    "**/services/backened": true,
+    "**/__pycache__": true
+  }
+}
