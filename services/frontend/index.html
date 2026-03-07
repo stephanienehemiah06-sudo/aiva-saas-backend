@@ -1,51 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIVA Lash & Nail Booking</title>
-    <link rel="stylesheet" href="/static/style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AIVA AI Automation</title>
+        <style>
+            :root {
+                --bg-1: #f9efe8;
+                --bg-2: #fff7f4;
+                --ink: #151515;
+                --muted: #595959;
+                --line: #e8ded8;
+                --brand: #111111;
+                --accent: #ff5a89;
+                --accent-2: #ffc5d8;
+                --surface: rgba(255, 255, 255, 0.78);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                font-family: Manrope, "Trebuchet MS", "Segoe UI", sans-serif;
+                color: var(--ink);
+                background:
+                    radial-gradient(1200px 400px at -10% -20%, #ffe7ef 10%, transparent 55%),
+                    radial-gradient(900px 360px at 110% 120%, #ffe7d5 12%, transparent 58%),
+                    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 28px;
+            }
+
+            .welcome-shell {
+                width: min(1080px, 100%);
+                border: 1px solid var(--line);
+                border-radius: 24px;
+                overflow: hidden;
+                background: var(--surface);
+                box-shadow: 0 22px 52px rgba(19, 13, 11, 0.14);
+                backdrop-filter: blur(7px);
+            }
+
+            .welcome-grid {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+            }
+
+            .welcome-left {
+                padding: 42px;
+                border-right: 1px solid var(--line);
+            }
+
+            .welcome-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 14px;
+                border-radius: 999px;
+                background: #fff;
+                border: 1px solid var(--line);
+                font-size: 12px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #2f2f2f;
+                font-weight: 600;
+            }
+
+            .welcome-left h1 {
+                margin: 16px 0 12px;
+                font-size: clamp(30px, 5vw, 52px);
+                line-height: 1.05;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+            }
+
+            .welcome-left p {
+                margin: 0;
+                color: var(--muted);
+                font-size: 16px;
+                line-height: 1.7;
+                max-width: 54ch;
+            }
+
+            .cta-row {
+                display: flex;
+                gap: 12px;
+                margin-top: 28px;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                text-decoration: none;
+                border-radius: 12px;
+                padding: 13px 20px;
+                font-size: 15px;
+                font-weight: 650;
+                border: 1px solid transparent;
+                transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+            }
+
+            .btn-primary {
+                background: linear-gradient(135deg, var(--brand), #323232);
+                color: #fff;
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+            }
+
+            .btn-secondary {
+                background: #fff;
+                color: #222;
+                border-color: var(--line);
+            }
+
+            .btn:hover {
+                transform: translateY(-2px);
+            }
+
+            .metrics {
+                margin-top: 26px;
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .metric {
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: #fff;
+                padding: 12px;
+            }
+
+            .metric .m-num {
+                margin: 0;
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .metric .m-text {
+                margin: 4px 0 0;
+                color: #6a6a6a;
+                font-size: 12px;
+            }
+
+            .welcome-right {
+                padding: 34px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .logo-wrap {
+                border-radius: 18px;
+                padding: 20px;
+                border: 1px solid var(--line);
+                background:
+                    radial-gradient(220px 110px at 10% 5%, #ffe8f1, transparent 60%),
+                    radial-gradient(220px 110px at 90% 90%, #ffeeda, transparent 60%),
+                    #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .app-logo {
+                width: min(300px, 92%);
+                height: auto;
+                display: block;
+                border-radius: 14px;
+            }
+
+            .feature {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                padding: 14px;
+            }
+
+            .feature h3 {
+                margin: 0 0 6px;
+                font-size: 16px;
+            }
+
+            .feature p {
+                margin: 0;
+                color: #666;
+                line-height: 1.55;
+                font-size: 14px;
+            }
+
+            .footer-note {
+                margin-top: 8px;
+                color: #6a6a6a;
+                font-size: 13px;
+            }
+
+            @media (max-width: 900px) {
+                .welcome-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .welcome-left {
+                    border-right: none;
+                    border-bottom: 1px solid var(--line);
+                    padding: 28px;
+                }
+
+                .welcome-right {
+                    padding: 24px;
+                }
+
+                .metrics {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
 </head>
 <body>
-    <div class="booking-container">
-        <div class="booking-left">
-            <img src="/static/images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg" class="app-logo" alt="AIVA Logo">
-            <p>Book beauty appointments quickly with your salon details, preferred service, and client contact information.</p>
+        <main class="welcome-shell">
+            <section class="welcome-grid">
+                <div class="welcome-left">
+                    <span class="welcome-badge">AIVA AI Automation</span>
+                    <h1>Run your beauty business with smart automation.</h1>
+                    <p>
+                        AIVA helps salons and technicians automate replies, bookings, reminders, and customer flow,
+                        while keeping your brand professional and human.
+                    </p>
+
+                    <div class="cta-row">
+                        <a id="signupLink" class="btn btn-primary" href="signup.html">Create Account</a>
+                        <a id="loginLink" class="btn btn-secondary" href="login.html">Login</a>
+                    </div>
+
+                    <div class="metrics">
+                        <article class="metric">
+                            <p class="m-num">24/7</p>
+                            <p class="m-text">Automated customer handling</p>
+                        </article>
+                        <article class="metric">
+                            <p class="m-num">Fast</p>
+                            <p class="m-text">From conversation to booking</p>
+                        </article>
+                        <article class="metric">
+                            <p class="m-num">Pro</p>
+                            <p class="m-text">Built for serious beauty brands</p>
+                        </article>
+                    </div>
         </div>
 
-        <div class="booking-right">
-            <h1>AIVA Lash & Nail Booking</h1>
-            <p class="booking-subtext">Create an appointment in seconds</p>
+                <div class="welcome-right">
+                    <div class="logo-wrap">
+                        <img
+                            src="/static/images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg"
+                            onerror="this.onerror=null;this.src='images/WhatsApp%20Image%202026-02-14%20at%208.22.13%20PM%20(1).jpeg';"
+                            class="app-logo"
+                            alt="AIVA Logo"
+                        >
+                    </div>
 
-            <form id="bookingForm">
-                <label>Technician Email</label>
-                <input type="email" id="technician_email" placeholder="Enter technician email" required>
+                    <article class="feature">
+                        <h3>Professional onboarding</h3>
+                        <p>Create your account in minutes and configure your services, calendar, and payment flow with confidence.</p>
+                    </article>
 
-                <label>Client Name</label>
-                <input type="text" id="client_name" placeholder="Enter client name" required>
+                    <article class="feature">
+                        <h3>Built for scale</h3>
+                        <p>From solo technician workflows to premium studio operations, AIVA keeps your automation clean and consistent.</p>
+                    </article>
 
-                <label>Service</label>
-                <input type="text" id="service" placeholder="E.g. Lash Extension" required>
-
-                <label>Date</label>
-                <input type="date" id="date" required>
-
-                <label>Time</label>
-                <input type="time" id="time" required>
-
-                <label>Client Email</label>
-                <input type="email" id="email" placeholder="Enter client email" required>
-
-                <label>Client Phone</label>
-                <input type="tel" id="phone" placeholder="Enter client phone number" required>
-
-                <button type="submit">Book Appointment</button>
-            </form>
-
-            <p id="responseMessage"></p>
+                    <p class="footer-note">Start with Sign Up if you are new. Use Login if you already have an account.</p>
         </div>
-    </div>
+            </section>
+        </main>
 
-    <script src="/static/script.js"></script>
+        <script>
+            // Prefer backend routes when available; otherwise keep static-file navigation for hosts like Vercel static deployments.
+            function bindSmartLink(elementId, routePath, htmlPath) {
+                const el = document.getElementById(elementId);
+                if (!el) return;
+
+                fetch(routePath, { method: "HEAD" })
+                    .then((res) => {
+                        el.href = res.ok ? routePath : htmlPath;
+                    })
+                    .catch(() => {
+                        el.href = htmlPath;
+                    });
+            }
+
+            bindSmartLink("signupLink", "/signup", "signup.html");
+            bindSmartLink("loginLink", "/login", "login.html");
+        </script>
 </body>
 </html>

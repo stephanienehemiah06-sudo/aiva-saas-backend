@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/services/frontend/index.html" },
+    { "source": "/signup", "destination": "/services/frontend/signup.html" },
+    { "source": "/login", "destination": "/services/frontend/login.html" },
+    { "source": "/dashboard", "destination": "/services/frontend/dashboard.html" },
+
+    { "source": "/style.css", "destination": "/services/frontend/style.css" },
+    { "source": "/script.js", "destination": "/services/frontend/script.js" },
+    { "source": "/login.js", "destination": "/services/frontend/login.js" },
+    { "source": "/signup.js", "destination": "/services/frontend/signup.js" },
+
+    { "source": "/images/(.*)", "destination": "/services/frontend/images/$1" },
+    { "source": "/static/(.*)", "destination": "/services/frontend/$1" }
+  ]
+}
