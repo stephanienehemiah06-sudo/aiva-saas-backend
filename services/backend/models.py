@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, Text
 from sqlalchemy.orm import relationship
-from database import Base
+from services.backend.database import Base
 
 
 class Technician(Base):

@@ -1,6 +1,6 @@
 # init_db.py
-from database import engine
-import models
+from services.backend.database import engine
+from services.backend import models
 
 print("🗑️  Dropping all tables...")
 models.Base.metadata.drop_all(bind=engine)

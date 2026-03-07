@@ -1,7 +1,7 @@
 # create_test_user.py
-from database import SessionLocal
-from models import Technician
-from auth import hash_password
+from services.backend.database import SessionLocal
+from services.backend.models import Technician
+from services.backend.auth import hash_password
 
 db = SessionLocal()
 
@@ -28,7 +28,7 @@ else:
     print(f"👤 User ID: {user.id}")
 
 # Also create some sample services
-from models import Service
+from services.backend.models import Service
 
 services = db.query(Service).filter(Service.technician_id == user.id).count()
 if services == 0 and user:

@@ -1,13 +1,14 @@
-from passlib.context import CryptContext
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError, VerificationError
 
-# Using Argon2 now
-pwd_context = CryptContext(
-    schemes=["argon2"],
-    deprecated="auto"
-)
+# Direct Argon2 hasher avoids passlib dependency issues in some environments.
+pwd_hasher = PasswordHasher()
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return pwd_hasher.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return pwd_hasher.verify(hashed_password, plain_password)
+    except (VerifyMismatchError, VerificationError):
+        return False

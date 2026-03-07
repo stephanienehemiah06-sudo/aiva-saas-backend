@@ -9,9 +9,9 @@ import hmac
 import json as jsonlib
 import os
 
-from main import app, get_db
-import models
-from database import Base
+from services.backend.main import app, get_db
+from services.backend import models
+from services.backend.database import Base
 
 # Use in-memory SQLite for testing
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"

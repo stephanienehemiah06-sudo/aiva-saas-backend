@@ -11,13 +11,11 @@ from fastapi.responses import PlainTextResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 
-import models
-import schemas
-
-from database import engine, get_db
+from services.backend import models, schemas
+from services.backend.database import engine, get_db
 from services.password_service import hash_password, verify_password
-from auth import create_access_token, get_technician_from_token
-from webhook import router as webhook_router
+from services.backend.auth import create_access_token, get_technician_from_token
+from services.backend.webhook import router as webhook_router
 
 # =======================
 # CREATE DATABASE
@@ -224,7 +222,7 @@ def get_services(
 # =======================
 
 try:
-    from models import Booking
+    from services.backend.models import Booking
 except ImportError:
     Booking = models.Appointment
 
@@ -283,7 +281,7 @@ def create_booking(
 # =======================
 
 try:
-    from models import ConversationState
+    from services.backend.models import ConversationState
 except ImportError:
     ConversationState = models.ChatSession
 
