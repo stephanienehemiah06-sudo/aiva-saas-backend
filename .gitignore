@@ -11,5 +11,14 @@ google_credentials.json
 __pycache__/
 *.pyc
 
+# Pytest artifacts
+.pytest_cache/
+.pytest_*.log
+.pytest_*_exit.txt
+.pytest_*_exit.log
+
+# Local virtual environment
+venv/
+
 # OS files
 .DS_Store
