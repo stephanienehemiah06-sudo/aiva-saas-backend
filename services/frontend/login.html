@@ -58,10 +58,21 @@ async function login(){
     return;
   }
 
-  // ✅ STORE REQUIRED DATA
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("technician_id", data.technician_id);
-  localStorage.setItem("business_name", data.business_name);
+  // Support both current backend schema and legacy keys.
+  const token = data.access_token || data.token;
+  const technicianId = data.technician?.id || data.technician_id;
+  const businessName = data.technician?.business_name || data.business_name || "";
+
+  if (!token) {
+    alert("Login succeeded but no token was returned by the server.");
+    return;
+  }
+
+  localStorage.setItem("token", token);
+  if (technicianId !== undefined && technicianId !== null) {
+    localStorage.setItem("technician_id", String(technicianId));
+  }
+  localStorage.setItem("business_name", businessName);
 
 window.location.href = "/dashboard";
 }

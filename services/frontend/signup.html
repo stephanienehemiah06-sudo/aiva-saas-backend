@@ -63,13 +63,24 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const res = await fetch(`${API_URL}/signup`, {
+      // Primary backend endpoint is /signup-technician. Keep /signup as fallback for older deployments.
+      let res = await fetch(`${API_URL}/signup-technician`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
       });
+
+      if (res.status === 404) {
+        res = await fetch(`${API_URL}/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+      }
 
       let data = {};
       try { data = await res.json(); } catch(_) { data = {}; }

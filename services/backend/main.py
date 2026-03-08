@@ -31,7 +31,6 @@ app = FastAPI(
     title="AIVA SaaS Agent Backend 🪄✨",
     version="1.1.0"
 )
-
 app.include_router(webhook_router)
 
 ROOT_DIR = pathlib.Path(__file__).resolve().parents[2]
@@ -385,4 +384,4 @@ Email: support@aivabeauty.app
 
 @app.get("/")
 def root_page():
-    return FileResponse(str(FRONTEND_DIR / "index.html"))
+    return {"message": "AIVA backend running"}
