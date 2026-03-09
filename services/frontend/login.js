@@ -1,6 +1,6 @@
 document.getElementById("loginBtn").addEventListener("click", async () => {
   const DEFAULT_API_URL = "https://web-production-6a7e4.up.railway.app";
-  const API_URL = (localStorage.getItem("API_URL") || DEFAULT_API_URL).replace(/\/+$/, "");
+  const API_URL = DEFAULT_API_URL.replace(/\/+$/, "");
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
   const errorMsg = document.getElementById("errorMsg");
