@@ -1,6 +1,7 @@
 document.getElementById("saveServiceBtn").addEventListener("click", async () => {
     try {
-        const API_URL = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
+        const DEFAULT_API_URL = "https://web-production-6a7e4.up.railway.app";
+        const API_URL = (localStorage.getItem("API_URL") || DEFAULT_API_URL).replace(/\/+$/, "");
         //---------------------------
         // Get token
         //---------------------------

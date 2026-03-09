@@ -1,4 +1,5 @@
-﻿const API = (localStorage.getItem("API_URL") || window.location.origin).replace(/\/+$/, "");
+﻿const DEFAULT_API_URL = "https://web-production-6a7e4.up.railway.app";
+const API = (localStorage.getItem("API_URL") || DEFAULT_API_URL).replace(/\/+$/, "");
 
 async function signup() {
   const payload = {
